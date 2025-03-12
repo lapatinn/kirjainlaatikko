@@ -14,9 +14,10 @@ Tavoitteet:
 
 * Käyttäjä pystyy valitsemaan arvostelulle/arvostelemalleen elokuvalle yhden tai useamman luokittelun (Elokuvan genre, julkaisuvuosi, arvosana). Mahdolliset luokat ovat tietokannassa.
 
-* Sovelluksessa on pääasiallisen arvostelun lisäksi toissijainen tietokohde, joka täydentää pääasiallista tietokohdetta. Käyttäjä pystyy lisäämään toissijaisia tietokohteita omiin ja muiden käyttäjien tietokohteisiin liittyen.
+* Sovelluksessa on pääasiallisen arvostelun lisäksi kommentteja, käyttäjä voi lisätä kommentteja omiin tai muiden arvosteluihin. 
 
 12.03:
+
 Added necessary components for basic functionality of the website, such as templates folder, static folder and corresponding functions to app.py. 
 
 
