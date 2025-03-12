@@ -2,14 +2,24 @@
 <html>
 
 <head>
-  <title>Etusivu</title>
+  <title>Elokuvien arvostelusovellus KirjainLaatikko</title>
 </head>
 
 <body>
   <h1>Etusivu</h1>
   <p>
-    <b>Tervetuloa</b> <i>sovellukseen</i>!
+    <b>Tervetuloa</b> <i>kirjainlaatikkoon</i>!
   </p>
+    <p>Täältä löydät <b>MAAILMAN</b> terävimmät ja mielenkiintoimmat elokuva-arvostelut</p>
+  <h1>{{ message }}</h1>
+  <ul>
+    {% for item in items%}
+    <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+
+  <img src="/static/madagascar.png" />
+  
 </body>
 
 </html>
