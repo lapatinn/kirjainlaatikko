@@ -16,5 +16,7 @@ Tavoitteet:
 
 * Sovelluksessa on pääasiallisen arvostelun lisäksi toissijainen tietokohde, joka täydentää pääasiallista tietokohdetta. Käyttäjä pystyy lisäämään toissijaisia tietokohteita omiin ja muiden käyttäjien tietokohteisiin liittyen.
 
-12.03
-Added necessary components for basic functionality of the website
+12.03:
+Added necessary components for basic functionality of the website, such as templates folder, static folder and corresponding functions to app.py. 
+
+
