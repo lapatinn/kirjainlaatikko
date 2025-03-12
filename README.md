@@ -1,7 +1,7 @@
 # kirjainlaatikko
-Elokuva-arvostelu web sovellus projekti :))))
+Elokuva-arvostelu web sovellus projekti, inspiraationa letterboxd (siksi myös nimi). 
 
-
+Tavoitteet:
 * Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
 
 * Käyttäjä pystyy lisäämään sovellukseen elokuva-arvosteluja. Lisäksi käyttäjä pystyy muokkaamaan ja poistamaan lisäämiään elokuva-arvosteluja.
@@ -16,3 +16,5 @@ Elokuva-arvostelu web sovellus projekti :))))
 
 * Sovelluksessa on pääasiallisen arvostelun lisäksi toissijainen tietokohde, joka täydentää pääasiallista tietokohdetta. Käyttäjä pystyy lisäämään toissijaisia tietokohteita omiin ja muiden käyttäjien tietokohteisiin liittyen.
 
+12.03
+Added necessary components for basic functionality of the website
