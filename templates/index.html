@@ -8,6 +8,12 @@
 <body>
   <h1>Etusivu</h1>
   <p>
+    <a href="/register">Rekisteröidy <b>ILMAISEKSI :P</b></a>
+  </p>
+  <p>
+    <a href="/form">Lähetä itsellesi viesti</a>
+  </p>
+  <p>
     <b>Tervetuloa</b> <i>kirjainlaatikkoon</i>!
   </p>
     <p>Täältä löydät <b>MAAILMAN</b> terävimmät ja mielenkiintoimmat elokuva-arvostelut</p>
@@ -20,6 +26,29 @@
 
   <img src="/static/madagascar.png" />
   
+  <h2>
+    {% if session.username %}
+    <p>
+      Olet kirjautunut nimellä {{session.username}}
+    </p>
+    <p>
+      <a href="/logout">Kirjaudu ulos</a>
+    </p>
+    {% else %}
+    <form action="/login" method="post"> 
+      <p>
+        Tunnus: <br />
+        <input type="text" name="username" />
+      </p>
+      <p>
+        Salasana: <br />
+        <input type="password" name="password" />
+      </p>
+      <input type="submit" value="Kirjaudu">
+    </form>
+    {% endif %}
+  </h2>
+
 </body>
 
 </html>
