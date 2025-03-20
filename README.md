@@ -21,3 +21,6 @@ Tavoitteet:
 Added necessary components for basic functionality of the website, such as templates folder, static folder and corresponding functions to app.py. 
 
 
+20.03:
+
+Added ability to create movie reviews, along with the required database table. User id is now stored in session. Rearranged some elements on the front page. 
