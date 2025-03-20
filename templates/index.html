@@ -7,29 +7,12 @@
 
 <body>
   <h1>Etusivu</h1>
-  <p>
-    <a href="/register">Rekisteröidy <b>ILMAISEKSI :P</b></a>
-  </p>
-  <p>
-    <a href="/form">Lähetä itsellesi viesti</a>
-  </p>
-  <p>
-    <a href="/new_item">Luo arvostelu</a>
-  </p>
-  <p>
-    <b>Tervetuloa</b> <i>kirjainlaatikkoon</i>!
-  </p>
-    <p>Täältä löydät <b>MAAILMAN</b> terävimmät ja mielenkiintoimmat elokuva-arvostelut</p>
-  <h1>{{ message }}</h1>
-  <ul>
-    {% for item in items%}
-    <li>{{ item }}</li>
-    {% endfor %}
-  </ul>
 
-  <img src="/static/madagascar.png" />
+  <p>Tervetuloa Kirjainlaatikkoon</p>
+
+  <p>Täältä löydät maailman terävimmät elokuva-arvostelut</p>
   
-  <h2>
+  <h2>Kirjautuminen:</h2>
     {% if session.username %}
     <p>
       Olet kirjautunut nimellä {{session.username}}, id-numerosi on {{session.user_id}}
@@ -50,7 +33,26 @@
       <input type="submit" value="Kirjaudu">
     </form>
     {% endif %}
-  </h2>
+  
+  <p>Linkit:</p>
+  <p>
+    <a href="/register">Rekisteröidy <b>ILMAISEKSI :P</b></a>
+  </p>
+  <p>
+    <a href="/form">Lähetä itsellesi viesti</a>
+  </p>
+  <p>
+    <a href="/new_item">Luo arvostelu</a>
+  </p>
+
+  <h1>{{ message }}</h1>
+  <ul>
+    {% for item in items%}
+    <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+
+  <img src="/static/madagascar.png" />
 
 </body>
 
