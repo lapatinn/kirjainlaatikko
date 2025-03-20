@@ -53,6 +53,10 @@ def logout():
     del session["username"]
     return redirect("/")
 
+@app.route("/new_item")
+def new_item():
+    return render_template("new_item.html")
+
 @app.route("/numbers")
 def numbers():
     content = ""

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Uusi arvostelu</title>
+</head>
+
+<body>
+    <h1>Lisää uusi elokuva-arvostelu</h1>
+  <form action="/create_item" method="post">
+    <p>
+      Elokuva: <br />
+      <input type="text" name="title" />
+    </p>
+    <p>
+      Arvosana: <br />
+      <input type="number" name="rating" min="0" max="10" /> / 10
+    </p>
+    <p>
+        Arvostelu: <br />
+        <textarea name="review" rows="8" cols="60"></textarea>
+    </p>
+    <input type="submit" value="Luo arvostelu" />
+  </form>
+</body>
+
+</html>
