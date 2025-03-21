@@ -16,6 +16,8 @@ Tavoitteet:
 
 * Sovelluksessa on pääasiallisen arvostelun lisäksi kommentteja, käyttäjä voi lisätä kommentteja omiin tai muiden arvosteluihin. 
 
+Log:
+
 12.03:
 
 Added necessary components for basic functionality of the website, such as templates folder, static folder and corresponding functions to app.py. 
