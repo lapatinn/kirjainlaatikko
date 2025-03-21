@@ -24,3 +24,7 @@ Added necessary components for basic functionality of the website, such as templ
 20.03:
 
 Added ability to create movie reviews, along with the required database table. User id is now stored in session. Rearranged some elements on the front page. 
+
+21.03:
+
+Added dedicated page for movie reviews. Each review will redirect to a page according to review id. This page will store the actual contents of the review. Rearranged some elements on various pages and added return links to various pages. 
