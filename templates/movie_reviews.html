@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Elokuva-arvostelut</title>
+</head>
+
+<body>
+    <h2>
+        Elokuva-arvostelut
+    </h2>
+
+    <ul>
+        {% for item in items %}
+        <li><a href="/movie_reviews/{{ item.id }}">{{ item.movie }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        <a href="/">Palaa etusivulle</a>
+    </p>
+</body>
+</html>

@@ -7,6 +7,7 @@
 
 <body>
     <h1>Lisää uusi elokuva-arvostelu</h1>
+  {% if session.username %}
   <form action="/create_item" method="post">
     <p>
       Elokuva: <br />
@@ -22,6 +23,24 @@
     </p>
     <input type="submit" value="Luo arvostelu" />
   </form>
+   {% else %}
+   <h3>Sinun täytyy kirjautua sisään, jotta voit jättää arvostelun</h3>
+   <form action="/login" method="post"> 
+    <p>
+      Tunnus: <br />
+      <input type="text" name="username" />
+    </p>
+    <p>
+      Salasana: <br />
+      <input type="password" name="password" />
+    </p>
+    <input type="submit" value="Kirjaudu">
+  </form>
+    <h4>Ei tunnusta?</h4>
+    <p><a href="/register">Rekisteröidy</a></p>
+    <p>tai</p>
+    <p><a href="/">Palaa etusivulle</a></p>
+  {% endif %}
 </body>
 
 </html>

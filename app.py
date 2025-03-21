@@ -2,7 +2,7 @@ from flask import Flask
 from flask import render_template, request, redirect, session # flask
 from werkzeug.security import generate_password_hash, check_password_hash # werkzeug
 import sqlite3 # sql
-import db, config # omat moduulit
+import db, config, reviews # omat moduulit
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -63,15 +63,27 @@ def new_item():
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
+    user_id = session["user_id"] # Session on oltava olemassa jotta arvostelu voidaan jättää
     movie_title = request.form["title"]
     movie_rating = request.form["rating"]
     movie_review = request.form["review"]
-    user_id = session["user_id"]
 
-    sql = "INSERT INTO reviews (user_id, movie, rating, review) VALUES (?, ?, ?, ?)"
-    db.execute(sql, [user_id, movie_title, movie_rating, movie_review])
+    reviews.add_review(user_id, movie_title, movie_rating, movie_review)
 
     return redirect("/")
+
+@app.route("/movie_reviews")
+def movie_reviews():
+    all_reviews = reviews.fetch_reviews()
+
+    
+
+    return render_template("movie_reviews.html", items=all_reviews)
+
+@app.route("/movie_reviews/<int:item_id>")
+def page(item_id):
+    review = reviews.get_review(item_id) # Hakee halutun arvostelun id
+    return render_template("show_review.html", item=review) # passataan id html tiedostoon
 
 @app.route("/numbers")
 def numbers():
