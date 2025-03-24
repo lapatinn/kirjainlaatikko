@@ -30,3 +30,7 @@ Added ability to create movie reviews, along with the required database table. U
 21.03:
 
 Added dedicated page for movie reviews. Each review will redirect to a page according to review id. This page will store the actual contents of the review. Rearranged some elements on various pages and added return links to various pages. 
+
+24.03:
+
+Added ability to edit and remove reviews. 
