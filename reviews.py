@@ -30,3 +30,8 @@ def update_review(review_id, movie_title, movie_rating, movie_review):
             ;"""
     
     db.execute(sql, [movie_title, movie_rating, movie_review, review_id])
+
+def remove_review(item_id):
+    sql = "DELETE FROM reviews WHERE id = ?"
+
+    db.execute(sql, [item_id])

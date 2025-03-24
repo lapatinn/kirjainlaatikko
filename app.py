@@ -89,6 +89,19 @@ def update_review():
 
     return redirect("/movie_reviews/" + review_id)
 
+@app.route("/remove_review/<int:item_id>", methods=["GET","POST"])
+def remove_review(item_id):
+    if request.method == "GET":
+        review = reviews.get_review(item_id)
+        return render_template("remove_review.html", item=review)
+    
+    if request.method == "POST":
+        if "remove" in request.form:
+            reviews.remove_review(item_id)
+            return redirect("/movie_reviews")
+        else:
+            return redirect("/movie_reviews/" + str(item_id))
+
 @app.route("/movie_reviews")
 def movie_reviews():
     all_reviews = reviews.fetch_reviews()
