@@ -16,6 +16,12 @@
     <p>
         Arvostelun tekijä: {{ item.username }}
     </p>
+    {% if item.user_id == session.user_id %}
+    <p>
+        <a href="/edit_review/{{ item.id }}">Muokkaa</a> |
+        <a href="/remove/{{ item.id }}">Poista</a>
+    </p>
+    {% endif %}
     <p>
         <a href="/movie_reviews">Palaa takaisin</a>
     </p>

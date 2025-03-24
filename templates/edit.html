@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Muokkaa arvostelua</title>
+</head>
+
+<body>
+    <h1>Muokkaa arvostelua</h1>
+  <form action="/update_review" method="post">
+    <p>
+      Elokuva: <br />
+      <input type="text" name="title" value="{{ item.movie }}"/>
+    </p>
+    <p>
+      Arvosana: <br />
+      <input type="number" name="rating" min="0" max="10" value="{{ item.rating }}"/> / 10
+    </p>
+    <p>
+        Arvostelu: <br />
+        <textarea name="review" rows="8" cols="60">{{ item.review }}</textarea>
+    </p>
+    <input type="submit" value="Päivitä arvostelu" />
+    <input type="hidden" name="item_id" value="{{ item.id }}">
+  </form>
+
+</body>
+
+</html>
