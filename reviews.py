@@ -14,10 +14,19 @@ def fetch_reviews():
     return db.query(sql)
 
 def get_review(item_id):
-    sql = """SELECT R.movie, R.rating, R.review, U.username
+    sql = """SELECT R.id, R.movie, R.rating, R.review, R.user_id, U.username
     FROM reviews R, users U
     WHERE R.user_id = U.id
     AND R.id = ?
     ;"""
 
     return db.query(sql, [item_id])[0]
+
+def update_review(review_id, movie_title, movie_rating, movie_review):
+    sql = """UPDATE reviews SET movie = ?,
+                                rating = ?,
+                                review = ?
+            WHERE id = ?
+            ;"""
+    
+    db.execute(sql, [movie_title, movie_rating, movie_review, review_id])

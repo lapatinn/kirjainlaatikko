@@ -72,12 +72,26 @@ def create_item():
 
     return redirect("/")
 
+@app.route("/edit_review/<int:item_id>")
+def edit_item(item_id):
+    review = reviews.get_review(item_id)
+
+    return render_template("edit.html", item=review)
+
+@app.route("/update_review", methods=["POST"])
+def update_review():
+    review_id = request.form["item_id"]
+    movie_title = request.form["title"]
+    movie_rating = request.form["rating"]
+    movie_review = request.form["review"]
+
+    reviews.update_review(review_id, movie_title, movie_rating, movie_review)
+
+    return redirect("/movie_reviews/" + review_id)
+
 @app.route("/movie_reviews")
 def movie_reviews():
     all_reviews = reviews.fetch_reviews()
-
-    
-
     return render_template("movie_reviews.html", items=all_reviews)
 
 @app.route("/movie_reviews/<int:item_id>")
