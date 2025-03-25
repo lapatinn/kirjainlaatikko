@@ -34,3 +34,7 @@ Added dedicated page for movie reviews. Each review will redirect to a page acco
 24.03:
 
 Added ability to edit and remove reviews. 
+
+25.03:
+
+Added ability to search movie reviews by movie title. Made minor changes to arrangement. Added function for when a movie is not found the page will prompt to add a review. 
