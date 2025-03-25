@@ -35,3 +35,11 @@ def remove_review(item_id):
     sql = "DELETE FROM reviews WHERE id = ?"
 
     db.execute(sql, [item_id])
+
+def find_reviews(query):
+    sql = """SELECT id, movie FROM reviews
+            WHERE movie LIKE ?
+            ORDER BY id DESC
+            ;"""
+    
+    return db.query(sql, ["%" + query + "%"])

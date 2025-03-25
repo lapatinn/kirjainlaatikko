@@ -101,6 +101,17 @@ def remove_review(item_id):
             return redirect("/movie_reviews")
         else:
             return redirect("/movie_reviews/" + str(item_id))
+        
+@app.route("/find_review")
+def search_review():
+    query = request.args.get("query")
+    if query:
+        results = reviews.find_reviews(query)
+    else:
+        query = ""
+        results = []
+
+    return render_template("find_review.html", query=query, results=results)
 
 @app.route("/movie_reviews")
 def movie_reviews():
