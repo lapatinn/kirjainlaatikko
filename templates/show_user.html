@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Käyttäjän {{ user.username }} sivu</title> 
+</head>
+
+<body>
+    <h1>{{ user.username }}</h1>
+    <p>
+        On valtuutettu elokuva-asiaintuntija ja on täten ansainnut oikeuden luoda elokuva-arvosteluja 
+        maineikkaalle alustallemme.
+    </p>
+    <p>
+        <b>Tässä ovat käyttäjän {{ user.username }} arvostelut:</b>
+    </p>
+
+    {% if reviews %}
+    <ul>
+        {% for rev in reviews %}
+        <li><a href="/movie_reviews/{{ rev.id }}">{{ rev.movie }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Käyttäjä {{ user.username }} ei ole luonut vielä yhtäkään elokuva-arvostelua.</p>
+    {% endif %}
+    <p>
+        | 
+        <a href="/movie_reviews">Kaikki arvostelut</a> | 
+        <a href="/all_users">Kaikki käyttäjät</a> | 
+        <a href="/">Etusivulle</a> 
+        | 
+    </p>
+    
+</body>
+
+</html>

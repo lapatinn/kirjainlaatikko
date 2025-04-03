@@ -2,7 +2,7 @@ from flask import Flask
 from flask import render_template, request, redirect, session # flask
 from werkzeug.security import generate_password_hash, check_password_hash # werkzeug
 import sqlite3 # sql
-import db, config, reviews # omat moduulit
+import db, config, reviews, users # omat moduulit
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -123,6 +123,16 @@ def page(item_id):
     review = reviews.get_review(item_id) # Hakee halutun arvostelun id
     return render_template("show_review.html", item=review) # passataan id html tiedostoon
 
+@app.route("/show_user/<int:user_id>")
+def show_user(user_id):
+    user = users.get_user(user_id)
+    items = users.get_users_reviews(user_id)
+    return render_template("show_user.html", user=user, reviews=items)
+
+@app.route("/all_users")
+def all_users():
+    guys = users.fetch_users()
+    return render_template("all_users.html", users=guys)
 @app.route("/numbers")
 def numbers():
     content = ""

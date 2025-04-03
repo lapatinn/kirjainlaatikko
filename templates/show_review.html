@@ -14,7 +14,7 @@
         Arvostelu: {{ item.review }}
     </p>
     <p>
-        Arvostelun tekijä: {{ item.username }}
+        Arvostelun tekijä: <a href="/show_user/{{ item.user_id }}">{{ item.username }}</a>
     </p>
     {% if item.user_id == session.user_id %}
     <p>
