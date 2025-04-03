@@ -10,11 +10,15 @@
         On valtuutettu elokuva-asiaintuntija ja on täten ansainnut oikeuden luoda elokuva-arvosteluja 
         maineikkaalle alustallemme.
     </p>
+    {% if reviews %}
     <p>
-        <b>Tässä ovat käyttäjän {{ user.username }} arvostelut:</b>
+        <b>Tässä ovat käyttäjän {{ user.username }} luomat arvostelut.</b>
+    </p>
+    <p>
+        Niitä on {{ reviews | count}}.
     </p>
 
-    {% if reviews %}
+    
     <ul>
         {% for rev in reviews %}
         <li><a href="/movie_reviews/{{ rev.id }}">{{ rev.movie }}</a></li>

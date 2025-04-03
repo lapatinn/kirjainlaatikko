@@ -31,7 +31,7 @@ def create():
         db.execute(sql, [username, password_hash])
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
-
+ 
     return "Tunnus luotu"
 
 @app.route("/login", methods=["POST"])
