@@ -38,3 +38,7 @@ Added ability to edit and remove reviews.
 25.03:
 
 Added ability to search movie reviews by movie title. Made minor changes to arrangement. Added function for when a movie is not found the page will prompt to add a review. 
+
+04.04:
+
+Added genres, directors and year of release (can also be edited). Separate table in database. Cleared and repopulated databse. Added Users page, where the reviews of a certain user can be accessed along with review count. Made everything look a little less shit by rearranging some template elements and introducing some if/else statements where information may not always be available. 
