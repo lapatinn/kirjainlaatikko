@@ -68,7 +68,11 @@ def create_item():
     movie_rating = request.form["rating"]
     movie_review = request.form["review"]
 
-    reviews.add_review(user_id, movie_title, movie_rating, movie_review)
+    genre = request.form["genre"]
+    director = request.form["director"]
+    year = request.form["year"]
+
+    reviews.add_review(user_id, movie_title, movie_rating, movie_review, genre, director, year)
 
     return redirect("/")
 
@@ -85,7 +89,11 @@ def update_review():
     movie_rating = request.form["rating"]
     movie_review = request.form["review"]
 
-    reviews.update_review(review_id, movie_title, movie_rating, movie_review)
+    genre = request.form["genre"]
+    director = request.form["director"]
+    year = request.form["year"]
+
+    reviews.update_review(review_id, movie_title, movie_rating, movie_review, genre, director, year)
 
     return redirect("/movie_reviews/" + review_id)
 
@@ -121,7 +129,9 @@ def movie_reviews():
 @app.route("/movie_reviews/<int:item_id>")
 def page(item_id):
     review = reviews.get_review(item_id) # Hakee halutun arvostelun id
-    return render_template("show_review.html", item=review) # passataan id html tiedostoon
+    info = reviews.get_info(item_id) # Hakee luokat
+
+    return render_template("show_review.html", item=review, info=info) # passataan id ja info html tiedostoon
 
 @app.route("/show_user/<int:user_id>")
 def show_user(user_id):

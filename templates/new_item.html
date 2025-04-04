@@ -21,6 +21,31 @@
         Arvostelu: <br />
         <textarea name="review" rows="8" cols="60"></textarea>
     </p>
+    <p>
+      Genre: <br />
+      <select name="genre">
+        <option value="">(valitse)</option>
+        <option value="Animaatio">Animaatio</option>
+        <option value="Dokumentti">Dokumentti</option>
+        <option value="Draama">Draama</option>
+        <option value="Komedia">Komedia</option>
+        <option value="Musikaali">Musikaali</option>
+        <option value="Rakkaus">Rakkaus</option>
+        <option value="Toiminta/Seikkailu">Toiminta/Seikkailu</option>
+        <option value="Jännitys">Jännitys</option>
+        <option value="Kauhu">Kauhu</option>
+        <option value="Trilleri">Trilleri</option>
+        <option value="Tiede">Tiede</option>
+      </select>
+    </p>
+    <p>
+      Ohjaaja: <br />
+      <input type="text" name="director" />
+    </p>
+    <p>
+      Julkaisuvuosi: <br />
+      <input type="number" name="year" min="1878" max="2025">
+    </p>
     <input type="submit" value="Luo arvostelu" />
   </form>
    {% else %}

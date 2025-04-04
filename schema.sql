@@ -12,3 +12,10 @@ CREATE TABLE reviews (
     review TEXT
 );
 
+CREATE TABLE movie_info (
+    id INTEGER PRIMARY KEY,
+    review_id INTEGER REFERENCES reviews,
+    genre TEXT,
+    director TEXT,
+    year INTEGER
+);

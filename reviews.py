@@ -1,9 +1,17 @@
 import sqlite3, db
 
-def add_review(user_id, movie_title, movie_rating, movie_review):
+def add_review(user_id, movie_title, movie_rating, movie_review, genre, director, year):
     sql = """INSERT INTO reviews (user_id, movie, rating, review) 
             VALUES (?, ?, ?, ?)"""
+    
     db.execute(sql, [user_id, movie_title, movie_rating, movie_review])
+
+    rev_id = db.last_insert_id()
+
+    sql1 = """INSERT INTO movie_info (review_id, genre, director, year)
+            VALUES (?, ?, ?, ?)"""
+
+    db.execute(sql1, [rev_id, genre, director, year])
 
 def fetch_reviews():
     sql = """SELECT id, user_id, movie, rating, review
@@ -22,7 +30,7 @@ def get_review(item_id):
 
     return db.query(sql, [item_id])[0]
 
-def update_review(review_id, movie_title, movie_rating, movie_review):
+def update_review(review_id, movie_title, movie_rating, movie_review, genre, director, year):
     sql = """UPDATE reviews SET movie = ?,
                                 rating = ?,
                                 review = ?
@@ -30,6 +38,14 @@ def update_review(review_id, movie_title, movie_rating, movie_review):
             ;"""
     
     db.execute(sql, [movie_title, movie_rating, movie_review, review_id])
+
+    sql1 = """UPDATE movie_info SET genre = ?,
+                                    director = ?,
+                                    year = ?
+            WHERE review_id = ?
+            ;"""
+
+    db.execute(sql1, [genre, director, year, review_id])
 
 def remove_review(item_id):
     sql = "DELETE FROM reviews WHERE id = ?"
@@ -43,3 +59,12 @@ def find_reviews(query):
             ;"""
     
     return db.query(sql, ["%" + query + "%"])
+
+def get_info(item_id):
+    sql = """SELECT genre, director, year
+            FROM movie_info
+            WHERE review_id = ?
+            ORDER BY id DESC
+            ;"""
+    
+    return db.query(sql, [item_id])
