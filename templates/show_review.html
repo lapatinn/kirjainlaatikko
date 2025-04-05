@@ -26,6 +26,48 @@
         Arvostelu: {{ item.review }}
     </p>
 
+    <h3>Kommentit:</h3>
+    {% if comments %}
+    <ul>
+        {% for comment in comments %}
+        {% if session.user_id == comment.user_id %}
+        <li>"{{ comment.content }}" - <a href="/show_user/{{ comment.user_id }}">{{ comment.username }}</a> | 
+        <a href="/remove_comment/{{ comment.id }}">Poista </a></li>
+        {% else %}
+        <li>"{{ comment.content }}" - <a href="/show_user/{{ comment.user_id }}">{{ comment.username }}</a></li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Ei kommentteja</p>
+    {% endif %}
+
+    <h4>Jätä kommentti:</h4>
+    {% if session.username %}
+    <form action="/create_comment" method="post">
+        <input type="hidden" name="review_id" value="{{ item.id }}">
+        <p>
+            <textarea name="comment" rows="6" cols="40"></textarea>
+        </p>
+        <p>
+            <input type="submit" name="send" value="Lähetä">
+        </p>
+    </form>
+    {% else %}
+    <p>Kirjaudu sisään jättääksesi kommentin</p>
+    <form action="/login" method="post"> 
+        <p>
+          Tunnus: <br />
+          <input type="text" name="username" />
+        </p>
+        <p>
+          Salasana: <br />
+          <input type="password" name="password" />
+        </p>
+        <input type="submit" value="Kirjaudu">
+    </form>
+    {% endif %}
+
     <h3>Toiminnot: </h3>
     {% if item.user_id == session.user_id %}
     <p>

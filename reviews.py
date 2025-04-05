@@ -68,3 +68,39 @@ def get_info(item_id):
             ;"""
     
     return db.query(sql, [item_id])
+
+def add_comment(user_id, review_id, comment):
+    sql = """INSERT INTO comments (user_id, review_id, content)
+            VALUES (?, ?, ?)
+            ;"""
+    
+
+    db.execute(sql, [user_id, review_id, comment])
+
+def fetch_comments(review_id):
+    sql = """SELECT C.id, C.content, C.user_id, U.username
+            FROM comments C, reviews R, users U
+            WHERE R.id = ? 
+            AND C.review_id = R.id
+            AND U.id = C.user_id
+            ORDER BY C.id
+            ;"""
+
+    res = db.query(sql, [review_id])
+
+    return res
+
+def get_comment(comment_id):
+    sql = """SELECT C.content, C.id, C.user_id, C.review_id
+            FROM comments C, users U
+            WHERE C.id = ?
+            AND C.user_id = U.id"""
+
+    return db.query(sql, [comment_id])[0]
+
+def remove_comment(comment_id):
+    sql = """DELETE FROM comments
+            WHERE id = ?
+            ;"""
+
+    db.execute(sql, [comment_id])

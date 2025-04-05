@@ -15,12 +15,16 @@
   <h2>Kirjautuminen:</h2>
     {% if session.username %}
     <p>
-      Olet kirjautunut nimellä {{session.username}}, id-numerosi on {{session.user_id}}
+      Olet kirjautunut nimellä <a href="/show_user/{{ session.user_id }}">{{session.username}}</a>
     </p>
     <p>
       <a href="/logout">Kirjaudu ulos</a>
     </p>
     {% else %}
+    <p>
+      <a href="/register">Luo tunnus</a>
+    </p>
+
     <form action="/login" method="post"> 
       <p>
         Tunnus: <br />
@@ -34,19 +38,13 @@
     </form>
     {% endif %}
   
-  <p>Linkit:</p>
-  <p>
-    <a href="/register">Rekisteröidy <b>ILMAISEKSI :P</b></a>
-  </p>
-  <p>
-    <a href="/form">Lähetä itsellesi viesti</a>
-  </p>
-  <h2><a href="/movie_reviews">Arvostelut</a></h2>
+  <h2>Linkit:</h2>
+  <h3><a href="/movie_reviews">Arvostelut</a></h3>
   <p>
     <a href="/new_item">Luo arvostelu</a> | 
     <a href="/find_review">Etsi arvosteluja</a>
   </p>
-  <h2><a href="/all_users">Käyttäjät</a></h2>
+  <h3><a href="/all_users">Käyttäjät</a></h3>
   <h1>{{ message }}</h1>
   <p>
     Tämä on asiantuntijoidemme laatima lista

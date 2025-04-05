@@ -81,6 +81,33 @@ def create_item():
 
     return redirect("/")
 
+@app.route("/create_comment", methods=["POST"])
+def create_comment():
+    comment = request.form["comment"]
+    user_id =  session["user_id"]
+    review_id = request.form["review_id"]
+    
+    reviews.add_comment(user_id, review_id, comment)   
+    
+    return redirect("/movie_reviews/" + review_id)
+
+@app.route("/remove_comment/<int:comment_id>", methods=["GET","POST"])
+def remove_comment(comment_id):
+    if request.method == "GET":
+        comment = reviews.get_comment(comment_id)
+
+    if request.method == "POST":
+        comment = reviews.get_comment(comment_id)
+        review_id = comment[3]
+
+        if "remove" in request.form:
+            reviews.remove_comment(comment_id)
+            return redirect("/movie_reviews/" + str(review_id))
+        else:
+            return redirect("/movie_reviews/" + str(review_id))
+
+    return render_template("remove_comment.html", comment=comment)
+
 @app.route("/edit_review/<int:item_id>")
 def edit_item(item_id):
     review = reviews.get_review(item_id)
@@ -135,8 +162,9 @@ def movie_reviews():
 def page(item_id):
     review = reviews.get_review(item_id) # Hakee halutun arvostelun id
     info = reviews.get_info(item_id) # Hakee luokat
+    comments = reviews.fetch_comments(item_id)
 
-    return render_template("show_review.html", item=review, info=info) # passataan id ja info html tiedostoon
+    return render_template("show_review.html", item=review, info=info, comments=comments) # passataan id ja info html tiedostoon
 
 @app.route("/show_user/<int:user_id>")
 def show_user(user_id):
@@ -148,21 +176,6 @@ def show_user(user_id):
 def all_users():
     guys = users.fetch_users()
     return render_template("all_users.html", users=guys)
-@app.route("/numbers")
-def numbers():
-    content = ""
-    for i in range(1,101):
-        content += str(i) + " "
-    return content
-
-@app.route("/form")
-def form():
-    return render_template("form.html")
-
-@app.route("/result", methods=["POST"])
-def result():
-    message = request.form["message"]
-    return render_template("result.html", message=message)
 
 if __name__ == "__main__":
     app.run(debug=False)

@@ -19,3 +19,10 @@ CREATE TABLE movie_info (
     director TEXT,
     year INTEGER
 );
+
+CREATE TABLE comments (
+    id INTEGER PRIMARY KEY,
+    review_id INTEGER REFERENCES reviews,
+    user_id INTEGER REFERENCES users,
+    content TEXT
+);
