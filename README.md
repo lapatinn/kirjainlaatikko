@@ -42,3 +42,7 @@ Added ability to search movie reviews by movie title. Made minor changes to arra
 04.04:
 
 Added genres, directors and year of release (can also be edited). Separate table in database. Cleared and repopulated databse. Added Users page, where the reviews of a certain user can be accessed along with review count. Made everything look a little less shit by rearranging some template elements and introducing some if/else statements where information may not always be available. 
+
+05.04:
+
+Added ability to leave comments on reviews. Users can also delete their own comments. Comments will show up as a list under a review. Cleaned up the front page and made minor rearrangements. Removed old unused functions (numbers, form/result) from app.py and corresponding templates. 
