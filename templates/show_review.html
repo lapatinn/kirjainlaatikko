@@ -20,7 +20,7 @@
     <h3>Käyttäjän <a href="/show_user/{{ item.user_id }}">{{ item.username }}</a> arvostelu:</h3>
 
     <p>
-        Arvosana: {{ item.rating }}
+        Arvosana: {{ item.rating }} / 10
     </p>
     <p>
         Arvostelu: {{ item.review }}
@@ -76,7 +76,7 @@
     </p>
     {% endif %}
     <p>
-        <a href="/movie_reviews">Palaa takaisin</a> |
+        <a href="/movie_reviews">Kaikki arvostelut</a> |
         <a href="/">Palaa etusivulle</a>
     </p>
 </body>

@@ -116,7 +116,7 @@ def edit_item(item_id):
     review = reviews.get_review(item_id)
     info = reviews.get_info(item_id)
 
-    return render_template("edit.html", item=review[0], info=info[0])
+    return render_template("edit.html", item=review, info=info[0])
 
 @app.route("/update_review", methods=["POST"])
 def update_review():
@@ -168,7 +168,7 @@ def page(item_id):
     info = reviews.get_info(item_id) # Hakee luokat
     comments = reviews.fetch_comments(item_id)
 
-    return render_template("show_review.html", item=review[0], info=info, comments=comments) # passataan id ja info html tiedostoon
+    return render_template("show_review.html", item=review, info=info, comments=comments) # passataan id ja info html tiedostoon
 
 @app.route("/show_user/<int:user_id>")
 def show_user(user_id):

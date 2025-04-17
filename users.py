@@ -18,7 +18,6 @@ def get_users_reviews(user_id):
             ;"""
     
     res = db.query(sql, [user_id])
-    print(res)
 
     return res if res else None
 
