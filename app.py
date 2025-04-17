@@ -23,11 +23,14 @@ def create():
     password2 = request.form["password2"]
 
     if len(username) < 3:
-        return "VIRHE: Liian lyhyt nimi"
+        error = "VIRHE: Liian lyhyt nimi (väh. 3 merkkiä)"
+        return render_template("error_message.html", error=error)
     if password1 != password2:
-        return "VIRHE: salasanat eivät ole samat"
+        error = "VIRHE: salasanat eivät ole samat"
+        return render_template("error_message.html", error=error)
     if len(password1) < 3:
-        return "VIRHE: Liian lyhyt salasana (väh. 3 merkkiä)"
+        error = "VIRHE: Liian lyhyt salasana (väh. 3 merkkiä)"
+        return render_template("error_message.html", error=error)
     
     password_hash = generate_password_hash(password1)
 
@@ -111,8 +114,9 @@ def remove_comment(comment_id):
 @app.route("/edit_review/<int:item_id>")
 def edit_item(item_id):
     review = reviews.get_review(item_id)
+    info = reviews.get_info(item_id)
 
-    return render_template("edit.html", item=review)
+    return render_template("edit.html", item=review[0], info=info[0])
 
 @app.route("/update_review", methods=["POST"])
 def update_review():
@@ -164,7 +168,7 @@ def page(item_id):
     info = reviews.get_info(item_id) # Hakee luokat
     comments = reviews.fetch_comments(item_id)
 
-    return render_template("show_review.html", item=review, info=info, comments=comments) # passataan id ja info html tiedostoon
+    return render_template("show_review.html", item=review[0], info=info, comments=comments) # passataan id ja info html tiedostoon
 
 @app.route("/show_user/<int:user_id>")
 def show_user(user_id):
