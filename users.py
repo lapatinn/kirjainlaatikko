@@ -1,5 +1,21 @@
 import db
 
+def create_user(username, password_hash):
+    sql = """INSERT INTO users (username, password_hash) 
+                VALUES (?, ?)
+                ;"""
+    
+    db.execute(sql, [username, password_hash])
+
+def get_hash(username): # lol
+    sql = """SELECT id, password_hash 
+                FROM users 
+                WHERE username = ?
+                ;"""
+    res = db.query(sql, [username])
+
+    return res[0] if res else "VIRHE: Kysely ei tuottanut tulosta. Annettua käyttäjänimeä ei ole tietokannassa."
+    
 def get_user(user_id):
     sql = """SELECT id, username
             FROM users
