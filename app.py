@@ -26,7 +26,7 @@ def create():
         error = "VIRHE: Liian lyhyt nimi (väh. 3 merkkiä)"
         return render_template("error_message.html", error=error)
     if password1 != password2:
-        error = "VIRHE: salasanat eivät ole samat"
+        error = "VIRHE: Salasanat eivät täsmää."
         return render_template("error_message.html", error=error)
     if len(password1) < 3:
         error = "VIRHE: Liian lyhyt salasana (väh. 3 merkkiä)"
@@ -35,8 +35,7 @@ def create():
     password_hash = generate_password_hash(password1)
 
     try:
-        sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
-        db.execute(sql, [username, password_hash])
+        users.create_user(username, password_hash)
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
  
@@ -47,17 +46,22 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
 
-    sql = "SELECT id, password_hash FROM users WHERE username = ?"
-    result = db.query(sql, [username])[0]
-    user_id = result["id"]
-    password_hash = result["password_hash"]
+    res = users.get_hash(username)
+
+    # get_hash palauttaa sqlite-olion jos käyttäjä ja salasana löytyy, muuten virheviestin:
+    if type(res) is str: 
+        return render_template("error_message.html", login_error=res)
+    else:
+        user_id = res["id"]
+        password_hash = res["password_hash"]
 
     if check_password_hash(password_hash, password):
         session["user_id"] = user_id
         session["username"] = username
         return redirect("/")
     else:
-        return "VIRHE: väärä tunnus tai salasana"
+        error = "VIRHE: väärä tunnus tai salasana"
+        return render_template("error_message.html", login_error=error)
 
 @app.route("/logout")
 def logout():

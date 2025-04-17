@@ -3,12 +3,27 @@
     <head>
         <title>Virhe</title>
     </head>
+    {% if error %}
     <body>
         <p>
             {{ error }}
         </p>
         <p>
-            <a href="/register">Yritä uudelleen</a>
+            <a href="/register">Yritä uudelleen</a> | 
+            <a href="/">Etusivulle</a>
+        </p>
+    {% endif %}
+    </body>
+
+    {% if login_error %}
+    <body>
+        <p>
+            {{ login_error }}
+        </p>
+        <p>
+            <a href="/">Takaisin</a>
         </p>
     </body>
+    {% endif %}
+
 </html>
