@@ -46,3 +46,7 @@ Added genres, directors and year of release (can also be edited). Separate table
 05.04:
 
 Added ability to leave comments on reviews. Users can also delete their own comments. Comments will show up as a list under a review. Cleaned up the front page and made minor rearrangements. Removed old unused functions (numbers, form/result) from app.py and corresponding templates. 
+
+17.04:
+
+Fixed edit_review page. The previously selected information about the review will now show as default value. Outsourced register and login functions to users.py: Perhaps a bit cleaner? Made canges to how error messages show, now a separate template with return links according to where the error came from (Error from register page will have a "retry" link pointing back to register page). Added return link to register page lol. 
