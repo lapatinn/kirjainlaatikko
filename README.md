@@ -1,4 +1,4 @@
-# kirjainlaatikko
+# Kirjainlaatikko
 Elokuva-arvostelu web sovellus projekti, inspiraationa letterboxd (siksi myös nimi). 
 
 Tavoitteet:
