@@ -24,7 +24,7 @@ def get_user(user_id):
     
     res = db.query(sql, [user_id])
 
-    return res[0] if res else None
+    return res[0] if res else "VIRHE: Kysely ei tuottanut tulosta. Kyseiselle id-numerolle ei ole käyttäjää."
 
 def get_users_reviews(user_id):
     sql = """SELECT R.movie, R.id

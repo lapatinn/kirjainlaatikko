@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Virhe</title>
+        <h1>Virhe!</h1>
     </head>
     {% if error %}
     <body>
@@ -22,6 +23,30 @@
         </p>
         <p>
             <a href="/">Etusivulle</a>
+        </p>
+    </body>
+    {% endif %}
+
+    {% if rnf_error %}
+    <body>
+        <p>
+            {{ rnf_error }}
+        </p>
+        <p>
+            <a href="/">Etusivulle</a> | 
+            <a href="/movie_reviews">Kaikki arvostelut</a>
+        </p>
+    </body>
+    {% endif %}
+
+    {% if unf_error %}
+    <body>
+        <p>
+            {{ unf_error }}
+        </p>
+        <p>
+            <a href="/">Etusivulle</a> | 
+            <a href="/all_users">Kaikki käyttäjät</a>
         </p>
     </body>
     {% endif %}

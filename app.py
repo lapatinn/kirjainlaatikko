@@ -100,16 +100,18 @@ def create_comment():
 
 @app.route("/remove_comment/<int:comment_id>", methods=["GET","POST"])
 def remove_comment(comment_id):
-    if request.method == "GET":
-        comment = reviews.get_comment(comment_id)
+    comment = reviews.get_comment(comment_id)
 
+    if type(comment) is str:
+        # Tähän login error koska vain etusivulle nappi
+        return render_template("error_message.html", login_error=comment)
+
+    if request.method == "GET":
         if comment["user_id"] != session["user_id"]:
             error = "VIRHE: Et voi poistaa muiden kommentteja."
             return render_template("error_message.html", login_error=error)
 
     if request.method == "POST":
-        comment = reviews.get_comment(comment_id)
-
         if comment["user_id"] != session["user_id"]:
             error = "VIRHE: Et voi poistaa muiden kommentteja."
             return render_template("error_message.html", login_error=error)
@@ -129,9 +131,12 @@ def edit_item(item_id):
     review = reviews.get_review(item_id)
     info = reviews.get_info(item_id)
 
+    if type(review) is str:
+        return render_template("error_message.html", rnf_error=review)
+
     if review["user_id"] != session["user_id"]:
         error = "VIRHE: Et voi muokata muiden arvosteluja."
-        return render_template("error_message.html", login_error=error)
+        return render_template("error_message.html", rnf_error=error)
 
     return render_template("edit.html", item=review, info=info[0])
 
@@ -196,17 +201,26 @@ def movie_reviews():
 
 @app.route("/movie_reviews/<int:item_id>")
 def page(item_id):
-    review = reviews.get_review(item_id) # Hakee halutun arvostelun id
+    review = reviews.get_review(item_id) # Hakee id:llä kaiken arvosteluun liittyvän tiedon
     info = reviews.get_info(item_id) # Hakee luokat
     comments = reviews.fetch_comments(item_id)
 
-    return render_template("show_review.html", item=review, info=info, comments=comments) # passataan id ja info html tiedostoon
+    if type(review) is str:
+        # rnf = Review Not Found 
+        return render_template("error_message.html", rnf_error=review)
+    else:
+        return render_template("show_review.html", item=review, info=info, comments=comments) # passataan id ja info html tiedostoon
 
 @app.route("/show_user/<int:user_id>")
 def show_user(user_id):
     user = users.get_user(user_id)
-    items = users.get_users_reviews(user_id)
-    return render_template("show_user.html", user=user, reviews=items)
+
+    if type(user) is str:
+        # unf = User Not Found
+        return render_template("error_message.html", unf_error=user)
+    else:
+        items = users.get_users_reviews(user_id)
+        return render_template("show_user.html", user=user, reviews=items)
 
 @app.route("/all_users")
 def all_users():
