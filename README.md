@@ -50,3 +50,7 @@ Added ability to leave comments on reviews. Users can also delete their own comm
 17.04:
 
 Fixed edit_review page. The previously selected information about the review will now show as default value. Outsourced register and login functions to users.py: Perhaps a bit cleaner? Made canges to how error messages show, now a separate template with return links according to where the error came from (Error from register page will have a "retry" link pointing back to register page). Added return link to register page lol. 
+
+18.04:
+
+Hardened the users rights management, added error messages to undefined pages with integer id's and added a function which checks login (returns error page if no login) for certain functions. Undefined pages won't break the app now and users can only edit/remove their own content. 
