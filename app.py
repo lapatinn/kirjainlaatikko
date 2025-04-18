@@ -1,11 +1,16 @@
 from flask import Flask
-from flask import render_template, request, redirect, session # flask
+from flask import render_template, request, redirect, session, abort # flask
 from werkzeug.security import generate_password_hash, check_password_hash # werkzeug
 import sqlite3 # sql
 import db, config, reviews, users # omat moduulit
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+def require_login():
+    if "user_id" not in session:
+        error = "VIRHE: Et ole kirjautunut sisään."
+        return render_template("error_message.html", login_error=error)
 
 @app.route("/")
 def index():
@@ -65,9 +70,10 @@ def login():
 
 @app.route("/logout")
 def logout():
-    del session["user_id"]
-    del session["username"]
-    return redirect("/")
+    if "user_id" in session:
+        del session["user_id"]
+        del session["username"]
+        return redirect("/")
 
 @app.route("/new_item") # uusi arvostelu
 def new_item():
@@ -75,6 +81,10 @@ def new_item():
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
+    login_error = require_login()
+    if login_error:
+        return login_error
+    
     user_id = session["user_id"] # Session on oltava olemassa jotta arvostelu voidaan jättää
     movie_title = request.form["title"]
     movie_rating = request.form["rating"]
@@ -90,6 +100,10 @@ def create_item():
 
 @app.route("/create_comment", methods=["POST"])
 def create_comment():
+    login_error = require_login()
+    if login_error:
+        return login_error
+    
     comment = request.form["comment"]
     user_id =  session["user_id"]
     review_id = request.form["review_id"]
@@ -100,6 +114,10 @@ def create_comment():
 
 @app.route("/remove_comment/<int:comment_id>", methods=["GET","POST"])
 def remove_comment(comment_id):
+    login_error = require_login()
+    if login_error:
+        return login_error
+    
     comment = reviews.get_comment(comment_id)
 
     if type(comment) is str:
@@ -128,6 +146,10 @@ def remove_comment(comment_id):
 
 @app.route("/edit_review/<int:item_id>")
 def edit_item(item_id):
+    login_error = require_login()
+    if login_error:
+        return login_error
+
     review = reviews.get_review(item_id)
     info = reviews.get_info(item_id)
 
@@ -142,6 +164,10 @@ def edit_item(item_id):
 
 @app.route("/update_review", methods=["POST"])
 def update_review():
+    login_error = require_login()
+    if login_error:
+        return login_error
+    
     review_id = request.form["item_id"]
     review = reviews.get_review(review_id)
 
@@ -163,6 +189,10 @@ def update_review():
 
 @app.route("/remove_review/<int:item_id>", methods=["GET","POST"])
 def remove_review(item_id):
+    login_error = require_login()
+    if login_error:
+        return login_error
+    
     if request.method == "GET":
         review = reviews.get_review(item_id)
 
