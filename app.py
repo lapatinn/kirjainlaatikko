@@ -103,8 +103,17 @@ def remove_comment(comment_id):
     if request.method == "GET":
         comment = reviews.get_comment(comment_id)
 
+        if comment["user_id"] != session["user_id"]:
+            error = "VIRHE: Et voi poistaa muiden kommentteja."
+            return render_template("error_message.html", login_error=error)
+
     if request.method == "POST":
         comment = reviews.get_comment(comment_id)
+
+        if comment["user_id"] != session["user_id"]:
+            error = "VIRHE: Et voi poistaa muiden kommentteja."
+            return render_template("error_message.html", login_error=error)
+        
         review_id = comment[3]
 
         if "remove" in request.form:
@@ -120,11 +129,21 @@ def edit_item(item_id):
     review = reviews.get_review(item_id)
     info = reviews.get_info(item_id)
 
+    if review["user_id"] != session["user_id"]:
+        error = "VIRHE: Et voi muokata muiden arvosteluja."
+        return render_template("error_message.html", login_error=error)
+
     return render_template("edit.html", item=review, info=info[0])
 
 @app.route("/update_review", methods=["POST"])
 def update_review():
     review_id = request.form["item_id"]
+    review = reviews.get_review(review_id)
+
+    if review["user_id"] != session["user_id"]:
+        error = "VIRHE: Et voi muokata muiden arvosteluja."
+        return render_template("error_message.html", login_error=error)
+
     movie_title = request.form["title"]
     movie_rating = request.form["rating"]
     movie_review = request.form["review"]
@@ -141,12 +160,21 @@ def update_review():
 def remove_review(item_id):
     if request.method == "GET":
         review = reviews.get_review(item_id)
+
+        if review["user_id"] != session["user_id"]:
+            error = "VIRHE: Et voi poistaa muiden arvosteluja."
+            return render_template("error_message.html", login_error=error)
+        
         return render_template("remove_review.html", item=review)
     
     if request.method == "POST":
         if "remove" in request.form:
-            reviews.remove_review(item_id)
-            return redirect("/movie_reviews")
+            if review["user_id"] != session["user_id"]:
+                error = "VIRHE: Et voi poistaa muiden arvosteluja."
+                return render_template("error_message.html", login_error=error)
+            else:
+                reviews.remove_review(item_id)
+                return redirect("/movie_reviews")
         else:
             return redirect("/movie_reviews/" + str(item_id))
         
