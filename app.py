@@ -94,9 +94,13 @@ def create_item():
     director = request.form["director"]
     year = request.form["year"]
 
-    reviews.add_review(user_id, movie_title, movie_rating, movie_review, genre, director, year)
+    if len(movie_title) <= 75 and len(movie_review) <= 1000 and int(movie_rating) >= 0 and int(movie_rating) <= 10 and genre and director and year and len(director) <= 50:
+        reviews.add_review(user_id, movie_title, movie_rating, movie_review, genre, director, year)
+    else:
+        error = "VIRHE: Tarkista syöte."
+        return render_template("error_message.html", input_error=error)
 
-    return redirect("/")
+    return redirect("/movie_reviews")
 
 @app.route("/create_comment", methods=["POST"])
 def create_comment():
@@ -107,8 +111,12 @@ def create_comment():
     comment = request.form["comment"]
     user_id =  session["user_id"]
     review_id = request.form["review_id"]
-    
-    reviews.add_comment(user_id, review_id, comment)   
+
+    if len(comment) <= 100:
+        reviews.add_comment(user_id, review_id, comment)   
+    else:
+        error = "VIRHE: Kommenttisi on liian pitkä"
+        return render_template("error_message.html", comment_error=error)
     
     return redirect("/movie_reviews/" + review_id)
 
@@ -195,8 +203,6 @@ def remove_review(item_id):
     
     if request.method == "GET":
         review = reviews.get_review(item_id)
-        print("review found: " , review["user_id"])
-
         if review["user_id"] != session["user_id"]:
             error = "VIRHE: Et voi poistaa muiden arvosteluja."
             return render_template("error_message.html", login_error=error)

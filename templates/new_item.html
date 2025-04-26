@@ -11,7 +11,7 @@
   <form action="/create_item" method="post">
     <p>
       Elokuva: <br />
-      <input type="text" name="title" maxlength="40" required/>
+      <input type="text" name="title" maxlength="75" required/>
     </p>
     <p>
       Arvosana: <br />
@@ -40,7 +40,7 @@
     </p>
     <p>
       Ohjaaja: <br />
-      <input type="text" name="director" required/>
+      <input type="text" name="director" maxlength="50" required/>
     </p>
     <p>
       Julkaisuvuosi: <br />
@@ -48,6 +48,7 @@
     </p>
     <input type="submit" value="Luo arvostelu" />
   </form>
+
    {% else %}
    <h3>Sinun täytyy kirjautua sisään, jotta voit jättää arvostelun</h3>
    <form action="/login" method="post"> 

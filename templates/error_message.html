@@ -51,4 +51,29 @@
     </body>
     {% endif %}
 
+    {% if input_error %}
+    <body>
+        <p>
+            {{ input_error }}
+        </p>
+        <p>
+            <a href="/">Etusivulle</a> 
+            
+        </p>
+    </body>
+    {% endif %}
+
+    {% if comment_error %}
+    <body>
+        <p>
+            {{ comment_error }}
+        </p>
+        <p>
+            <a href="/">Etusivulle</a> |
+            <a href="/movie_reviews">Kaikki arvostelut</a>
+            
+        </p>
+    </body>
+    {% endif %}
+
 </html>
