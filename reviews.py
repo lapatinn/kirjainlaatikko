@@ -49,7 +49,9 @@ def update_review(review_id, movie_title, movie_rating, movie_review, genre, dir
     db.execute(sql1, [genre, director, year, review_id])
 
 def remove_review(item_id):
-    sql = "DELETE FROM reviews WHERE id = ?"
+    sql = """DELETE FROM reviews
+    WHERE id = ?
+    ;"""
 
     db.execute(sql, [item_id])
 

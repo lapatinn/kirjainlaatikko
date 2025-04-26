@@ -195,6 +195,7 @@ def remove_review(item_id):
     
     if request.method == "GET":
         review = reviews.get_review(item_id)
+        print("review found: " , review["user_id"])
 
         if review["user_id"] != session["user_id"]:
             error = "VIRHE: Et voi poistaa muiden arvosteluja."
@@ -203,6 +204,8 @@ def remove_review(item_id):
         return render_template("remove_review.html", item=review)
     
     if request.method == "POST":
+        review = reviews.get_review(item_id)
+
         if "remove" in request.form:
             if review["user_id"] != session["user_id"]:
                 error = "VIRHE: Et voi poistaa muiden arvosteluja."

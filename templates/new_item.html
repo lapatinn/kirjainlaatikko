@@ -11,19 +11,19 @@
   <form action="/create_item" method="post">
     <p>
       Elokuva: <br />
-      <input type="text" name="title" />
+      <input type="text" name="title" maxlength="40" required/>
     </p>
     <p>
       Arvosana: <br />
-      <input type="number" name="rating" min="0" max="10" /> / 10
+      <input type="number" name="rating" min="0" max="10" required/> / 10
     </p>
     <p>
         Arvostelu: <br />
-        <textarea name="review" rows="8" cols="60"></textarea>
+        <textarea name="review" rows="8" cols="60" maxlength="1000" required></textarea>
     </p>
     <p>
       Genre: <br />
-      <select name="genre">
+      <select name="genre" required>
         <option value="">(valitse)</option>
         <option value="Animaatio">Animaatio</option>
         <option value="Dokumentti">Dokumentti</option>
@@ -40,11 +40,11 @@
     </p>
     <p>
       Ohjaaja: <br />
-      <input type="text" name="director" />
+      <input type="text" name="director" required/>
     </p>
     <p>
       Julkaisuvuosi: <br />
-      <input type="number" name="year" min="1878" max="2025">
+      <input type="number" name="year" min="1878" max="2025" required>
     </p>
     <input type="submit" value="Luo arvostelu" />
   </form>

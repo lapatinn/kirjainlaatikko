@@ -47,7 +47,7 @@
     <form action="/create_comment" method="post">
         <input type="hidden" name="review_id" value="{{ item.id }}">
         <p>
-            <textarea name="comment" rows="6" cols="40"></textarea>
+            <textarea name="comment" rows="6" cols="40" required></textarea>
         </p>
         <p>
             <input type="submit" name="send" value="Lähetä">
