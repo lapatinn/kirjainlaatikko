@@ -54,3 +54,7 @@ Fixed edit_review page. The previously selected information about the review wil
 18.04:
 
 Hardened the users rights management, added error messages to undefined pages with integer id's and added a function which checks login (returns error page if no login) for certain functions. Undefined pages won't break the app now and users can only edit/remove their own content. 
+
+26.04:
+
+Apparently I managed to break removing reviews, nice. Fixed that. Added input regulation to templates and app.py so all user inputs (I think) will be double checked. 
