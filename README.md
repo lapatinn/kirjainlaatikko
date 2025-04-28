@@ -1,6 +1,10 @@
 # Kirjainlaatikko
 Elokuva-arvostelu web sovellus projekti, inspiraationa letterboxd (siksi myös nimi). 
 
+Suorita ennen käyttöä:
+
+sqlite3 database.db < schema.sql
+
 Tavoitteet:
 * Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
 
@@ -58,3 +62,7 @@ Hardened the users rights management, added error messages to undefined pages wi
 26.04:
 
 Apparently I managed to break removing reviews, nice. Fixed that. Added input regulation to templates and app.py so all user inputs (I think) will be double checked. 
+
+28.04:
+
+Added css styles. Modified frontpage. Made changes to arrangement and return links on various pages. 
