@@ -2,11 +2,21 @@
 <html>
 
 <head>
+  <link rel="stylesheet" href="/static/main.css">
   <title>Poista arvostelu</title>
 </head>
 
 <body>
+  <div class="header">
     <h1>Poista arvostelu</h1>
+  </div>
+  <div class="nav">
+    <a href="/movie_reviews">Arvostelut</a> |
+    <a href="/new_item">Luo arvostelu</a> |
+    <a href="/find_review">Etsi arvostelu</a> |
+    <a href="/all_users">Käyttäjät</a> 
+  </div>
+  <div class="content">
     <p>Arvostelu: {{ item.movie }} | {{ item.rating }} / 10</p>
     <p>Haluatko varmasti poistaa arvostelun?</p>
   <form action="/remove_review/{{ item.id }}" method="post">
@@ -16,6 +26,7 @@
       <a href="/">Etusivulle</a>
     </p>
   </form>
+  </div>
 
 </body>
 

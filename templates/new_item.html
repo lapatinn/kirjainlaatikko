@@ -2,11 +2,22 @@
 <html>
 
 <head>
+  <link rel="stylesheet" href="/static/main.css">
   <title>Uusi arvostelu</title>
 </head>
 
 <body>
+  <div class="header">
     <h1>Lisää uusi elokuva-arvostelu</h1>
+  </div>
+  <div class="nav">
+    <a href="/movie_reviews">Arvostelut</a> |
+    <a href="/new_item">Luo arvostelu</a> |
+    <a href="/find_review">Etsi arvostelu</a> |
+    <a href="/all_users">Käyttäjät</a> 
+  </div>
+
+  <div class="content">
   {% if session.username %}
   <form action="/create_item" method="post">
     <p>
@@ -47,6 +58,9 @@
       <input type="number" name="year" min="1878" max="2025" required>
     </p>
     <input type="submit" value="Luo arvostelu" />
+    <p>
+    <a href="/">Etusivulle</a>
+    </p>
   </form>
 
    {% else %}
@@ -63,9 +77,10 @@
     <input type="submit" value="Kirjaudu">
   </form>
     <h4>Ei tunnusta?</h4>
-    <p><a href="/register">Rekisteröidy</a> | <a href="/">Takaisin etusivulle</a>
+    <p><a href="/register">Rekisteröidy</a> | <a href="/">Etusivulle</a>
     </p>
   {% endif %}
+  </div>
 </body>
  
 </html>

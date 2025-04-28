@@ -2,10 +2,23 @@
 <html>
 
 <head>
+  <link rel="stylesheet" href="/static/main.css">
   <title>Luo tunnus</title>
 </head>
 
 <body>
+  <div class="header">
+  <h1>
+    Luo tunnus
+  </h1>
+  </div>
+  <div class="nav">
+    <a href="/movie_reviews">Arvostelut</a> |
+    <a href="/new_item">Luo arvostelu</a> |
+    <a href="/find_review">Etsi arvostelu</a> |
+    <a href="/all_users">Käyttäjät</a> 
+  </div>
+  <div class="content">
   <form action="/create" method="post">
     <p>
       Tunnus: <br />
@@ -24,6 +37,7 @@
   <p>
     <a href="/">Etusivulle</a>
   </p>
+  </div>
 </body>
 
 </html>

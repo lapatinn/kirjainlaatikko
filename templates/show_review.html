@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="/static/main.css">
     <title>{{ item.movie }}</title> 
 </head>
 
 <body>
-    <h1>{{ item.movie }}</h1>
+    <div class="header">
+    <h1>Arvostelussa: {{ item.movie }}</h1>
+    </div>
+    <div class="nav">
+        <a href="/movie_reviews">Arvostelut</a> |
+        <a href="/new_item">Luo arvostelu</a> |
+        <a href="/find_review">Etsi arvostelu</a> |
+        <a href="/all_users">Käyttäjät</a> 
+    </div>
+    <div class="content">
     {% if info %}
     <p>
-        <h3>Tietoja elokuvasta: </h3>
+        <h2>Tietoja elokuvasta: </h2>
         {% for info in info %}
         <p>Genre: {{ info.genre }} </p>
         <p>Ohjaaja: {{ info.director }} </p>
@@ -17,7 +27,7 @@
     </p>
     {% endif %}
 
-    <h3>Käyttäjän <a href="/show_user/{{ item.user_id }}">{{ item.username }}</a> arvostelu:</h3>
+    <h2>Käyttäjän <a href="/show_user/{{ item.user_id }}">{{ item.username }}</a> arvostelu:</h2>
 
     <p>
         Arvosana: {{ item.rating }} / 10
@@ -26,7 +36,7 @@
         Arvostelu: {{ item.review }}
     </p>
 
-    <h3>Kommentit:</h3>
+    <h2>Kommentit:</h2>
     {% if comments %}
     <ul>
         {% for comment in comments %}
@@ -68,7 +78,7 @@
     </form>
     {% endif %}
 
-    <h3>Toiminnot: </h3>
+    <h2>Toiminnot: </h2>
     {% if item.user_id == session.user_id %}
     <p>
         <a href="/edit_review/{{ item.id }}">Muokkaa</a> |
@@ -76,9 +86,9 @@
     </p>
     {% endif %}
     <p>
-        <a href="/movie_reviews">Kaikki arvostelut</a> |
-        <a href="/">Palaa etusivulle</a>
+        <a href="/">Etusivulle</a>
     </p>
+    </div>
 </body>
 
 </html>

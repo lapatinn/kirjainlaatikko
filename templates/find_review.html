@@ -2,12 +2,23 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="/static/main.css">
     <title>Etsi arvosteluja</title>
 </head>
 
 <body>
+    <div class="header">
     <h1>Etsi arvostelu</h1>
+    </div>
 
+    <div class="nav">
+        <a href="/movie_reviews">Arvostelut</a> |
+        <a href="/new_item">Luo arvostelu</a> |
+        <a href="/find_review">Etsi arvostelu</a> |
+        <a href="/all_users">Käyttäjät</a> 
+    </div>
+
+    <div class="content">
     <form action="/find_review" method="get">
         <p>
             Hakusana (Elokuvan nimi): <input type="text" name="query" value="{{ query }}">
@@ -16,7 +27,7 @@
     </form>
 
     <p>
-    <a href="/">Takaisin etusivulle</a>
+    <a href="/">Etusivulle</a>
     </p>
 
     {% if query %}
@@ -38,6 +49,7 @@
     </p>
     {% endif %}
     {% endif %}
+    </div>
 </body>
 
 </html>

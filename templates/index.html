@@ -2,60 +2,65 @@
 <html>
 
 <head>
+  <link rel="stylesheet" href="/static/main.css">
   <title>Kirjainlaatikko</title>
 </head>
 
 <body>
-  <h1>Etusivu</h1>
-
-  <p>Tervetuloa Kirjainlaatikkoon</p>
-
-  <p>Täältä löydät maailman terävimmät elokuva-arvostelut</p>
+  <div class="header">
+    <h1>KirjainLaatikko</h1>
+  </div>
   
-  <h2>Kirjautuminen:</h2>
-    {% if session.username %}
-    <p>
-      Olet kirjautunut nimellä <a href="/show_user/{{ session.user_id }}">{{session.username}}</a>
-    </p>
-    <p>
-      <a href="/logout">Kirjaudu ulos</a>
-    </p>
-    {% else %}
-    <p>
-      <a href="/register">Luo tunnus</a>
-    </p>
+  <div class="nav">
+    <a href="/movie_reviews">Arvostelut</a> |
+    <a href="/new_item">Luo arvostelu</a> |
+    <a href="/find_review">Etsi arvostelu</a> |
+    <a href="/all_users">Käyttäjät</a> 
+  </div>
 
-    <form action="/login" method="post"> 
+  <div class="content">
+    <h2>Kirjautuminen</h2>
+      {% if session.username %}
       <p>
-        Tunnus: <br />
-        <input type="text" name="username" />
+        Tervetuloa <a href="/show_user/{{ session.user_id }}">{{session.username}}!</a>
       </p>
       <p>
-        Salasana: <br />
-        <input type="password" name="password" />
+        Aika arvostella elokuvia!
       </p>
-      <input type="submit" value="Kirjaudu">
-    </form>
-    {% endif %}
-  
-  <h2>Linkit:</h2>
-  <h3><a href="/movie_reviews">Arvostelut</a></h3>
-  <p>
-    <a href="/new_item">Luo arvostelu</a> | 
-    <a href="/find_review">Etsi arvosteluja</a>
-  </p>
-  <h3><a href="/all_users">Käyttäjät</a></h3>
-  <h1>{{ message }}</h1>
-  <p>
-    Tämä on asiantuntijoidemme laatima lista
-  </p>
-  <ul>
-    {% for item in items%}
-    <li>{{ item }}</li>
-    {% endfor %}
-  </ul>
+      <p>
+        <a href="/logout">Kirjaudu ulos</a>
+      </p>
+      {% else %}
+      <p>
+        <a href="/register">Luo tunnus</a>
+      </p>
 
-  <img src="/static/madagascar.png" />
+      <form action="/login" method="post"> 
+        <p>
+          Tunnus: <br />
+          <input type="text" name="username" required/>
+        </p>
+        <p>
+          Salasana: <br />
+          <input type="password" name="password" required/>
+        </p>
+        <input type="submit" value="Kirjaudu" />
+        <p></p>
+      </form>
+      {% endif %}
+    
+    <h2>{{ message }}</h2>
+    <p>
+      Tämä on asiantuntijoidemme laatima lista
+    </p>
+    <ul>
+      {% for item in items%}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+
+    <img src="/static/madagascar.png" />
+  </div>
 
 </body>
 

@@ -3,13 +3,23 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="/static/main.css">
     <title>Käyttäjät</title>
 </head>
 
 <body>
-    <h2>
-        Kirjainlaatikon arvostetut käyttäjät:
-    </h2>
+    <div class="header">
+        <h1>
+            Kirjainlaatikon arvostetut käyttäjät
+        </h1>
+    </div>
+    <div class="nav">
+        <a href="/movie_reviews">Arvostelut</a> |
+        <a href="/new_item">Luo arvostelu</a> |
+        <a href="/find_review">Etsi arvostelu</a> |
+        <a href="/all_users">Käyttäjät</a> 
+      </div>
+    <div class="content">
     {% if users %}
     <ul>
         {% for user in users %}
@@ -22,7 +32,8 @@
     </p>
     {% endif %}
     <p>
-        <a href="/">Palaa etusivulle</a>
+        <a href="/">Etusivulle</a>
     </p>
+    </div>
 </body>
 </html>

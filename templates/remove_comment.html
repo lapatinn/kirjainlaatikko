@@ -2,12 +2,23 @@
 <html>
 
 <head>
+  <link rel="stylesheet" href="/static/main.css">
   <title>Poista kommentti</title>
 </head>
 
 <body>
+  <div class="header">
     <h1>Poista kommentti</h1>
-    <p>Kommentti: "{{ comment.content }}"</p>
+  </div>
+  <div class="nav">
+    <a href="/movie_reviews">Arvostelut</a> |
+    <a href="/new_item">Luo arvostelu</a> |
+    <a href="/find_review">Etsi arvostelu</a> |
+    <a href="/all_users">Käyttäjät</a> 
+  </div>
+  <div class="content">
+    <h2>Kommentti:</h2>
+    <p>"{{ comment.content }}"</p>
     <p>Haluatko varmasti poistaa kommentin?</p> 
   <form action="/remove_comment/{{ comment.id }}" method="post">
     <input type="submit" name="remove" value="Poista kommentti">
@@ -15,6 +26,7 @@
     <p>
       <a href="/">Etusivulle</a>
     </p>
+  </div>
   </form>
 
 </body>
