@@ -20,12 +20,17 @@
         <a href="/all_users">Käyttäjät</a> 
     </div>
     <div class="content">
+    {% if items %}
     <ul>
         {% for item in items %}
         <li><a href="/movie_reviews/{{ item.id }}">{{ item.movie }}</a></li>
         {% endfor %}
     </ul>
-
+    {% else %}
+    <p>
+        Ei arvosteluja (vielä).
+    </p>
+    {% endif %}
     <p>
         <a href="/">Etusivulle</a>
     </p>
