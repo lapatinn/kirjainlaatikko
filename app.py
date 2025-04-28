@@ -51,7 +51,11 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
 
-    res = users.get_hash(username)
+    if username and password:
+        res = users.get_hash(username)
+    else:
+        error = "VIRHE: Et voi kirjautua ilman tunnusta!"
+        return render_template("error_message.html", login_error=error)
 
     # get_hash palauttaa sqlite-olion jos käyttäjä ja salasana löytyy, muuten virheviestin:
     if type(res) is str: 
