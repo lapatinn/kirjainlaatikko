@@ -105,7 +105,7 @@ def login():
         session["username"] = username
         return redirect("/")
     else:
-        error = "VIRHE: väärä tunnus tai salasana"
+        error = "VIRHE: väärä tunnus tai salasana!"
         return render_template("error_message.html", login_error=error)
 
 @app.route("/logout")
@@ -235,7 +235,7 @@ def update_review():
     if check_movie(movie_title, movie_rating, movie_review, genre, director, year):
         reviews.update_review(review_id, movie_title, movie_rating, movie_review, genre, director, year)
     else:
-        error = "VIRHE: Älä jaksa oikeesti kokoajan tehä kepposia"
+        error = "VIRHE: Älä jaksa oikeesti kokoajan tehä kepposia.. (Tarkista syöte)"
         flash(error)
         return redirect("/edit_review/" + str(review_id))
 

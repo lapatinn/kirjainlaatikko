@@ -27,15 +27,15 @@
   <form action="/update_review" method="post">
     <p>
       Elokuva: <br />
-      <input type="text" name="title" value="{{ item.movie }}"/>
+      <input type="text" name="title" value="{{ item.movie }}" maxlength="75" required/>
     </p>
     <p>
       Arvosana: <br />
-      <input type="number" name="rating" min="0" max="10" value="{{ item.rating }}"/> / 10
+      <input type="number" name="rating" min="0" max="10" value="{{ item.rating }}" required/> / 10
     </p>
     <p>
         Arvostelu: <br />
-        <textarea name="review" rows="8" cols="60">{{ item.review }}</textarea>
+        <textarea name="review" rows="8" cols="60" maxlength="1000" required>{{ item.review }}</textarea>
     </p>
     <p>
       Genre: <br />
@@ -56,11 +56,11 @@
     </p>
     <p>
       Ohjaaja: <br />
-      <input type="text" name="director" value="{{ info.director }}" />
+      <input type="text" name="director" value="{{ info.director }}" maxlength="50" required />
     </p>
     <p>
       Julkaisuvuosi: <br />
-      <input type="number" name="year" min="1878" max="2025" value="{{ info.year }}" />
+      <input type="number" name="year" min="1878" max="2025" value="{{ info.year }}" required/>
     </p>
     
     <input type="submit" value="Päivitä arvostelu" />
