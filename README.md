@@ -66,3 +66,9 @@ Apparently I managed to break removing reviews, nice. Fixed that. Added input re
 28.04:
 
 Added css styles. Modified frontpage. Made changes to arrangement and return links on various pages. 
+
+01.05:
+
+Moved most error messages from a separate page to a flash()-call. This applies to errors that would appear on a specific page, since flash() needs a redirect in order to update the page and show the message. Errors that occur when a user epicly trolls me by typing in an address that is not defined (or otherwise inaccessible due to whatever), will still redirect to a separate page. 
+Had to make a separate function for checking the integrity of movie reviews: the if-and statement chain was taking up a stupid amount of horizontal space, much cleaner. In the process realized that editing a review has no restrictions whatsoever, fixed that. 
+Added an alt-thingy to the image on the frontpage and "cleaned up" the code a little and uhh yeah. 
