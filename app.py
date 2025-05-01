@@ -1,8 +1,8 @@
 from flask import Flask
-from flask import render_template, request, redirect, session, abort # flask
+from flask import render_template, request, redirect, session, abort, flash # flask
 from werkzeug.security import generate_password_hash, check_password_hash # werkzeug
 import sqlite3 # sql
-import db, config, reviews, users # omat moduulit
+import config, reviews, users # omat moduulit
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -11,10 +11,40 @@ def require_login():
     if "user_id" not in session:
         error = "VIRHE: Et ole kirjautunut sisään."
         return render_template("error_message.html", login_error=error)
+    
+def check_movie(title, rating, review, genre, director, year):
+    # Kaikki olemassa
+    if title and rating and review and genre and director and year: 
+        data_exists = True
+    else:
+        return False
+    
+    # Merkkijonot oikean pituiset
+    if len(title) > 0 and len(title) <= 75 and len(review) > 0 and len(review) <= 1000 and len(director) > 0 and len(director) <= 50:
+        # Tarkistan vaan titlen koska ainoo joka aiheuttaa ongelmii kosk arvosteluu ei voi klikkaa
+        # muut saa periaattees olla tyhjii iha sama ei ne vaikuta mihkää mitenkää
+        if title == " " or title == "  " or title == "   " or title == "    " or title == "     ": 
+        # Ihan vitun luolamies logiikkaketju mut sano mun sanoneen tää on bulletproof :DD
+        # Ei kukaa laittais yli 5 välilyöntii jos tarkotuksena on tehä "empty title troll"
+            return False
+        string_length = True
+    else:
+        return False
+    
+    # Kokonaisluvut oikealla lukuvälillä
+    if int(rating) >= 0 and int(rating) <= 10 and int(year) >= 1878 and int(year) <= 2025:
+        int_values = True
+    else:
+        return False
+    
+    if data_exists and string_length and int_values:
+        return True
+    else:
+        return False
 
 @app.route("/")
 def index():
-    movies = ["Terminator", "Star Wars", "Madagascar", "Vamppyyri elokuva", "Matin ennakkotehtävä"]
+    movies = ["Terminator", "Star Wars", "Madagascar", "Autot 2", "Matin ennakkotehtävä"]
     return render_template("index.html", message="Parhaat elokuvat 2025", items=movies)
 
 @app.route("/register")
@@ -28,22 +58,26 @@ def create():
     password2 = request.form["password2"]
 
     if len(username) < 3:
-        error = "VIRHE: Liian lyhyt nimi (väh. 3 merkkiä)"
-        return render_template("error_message.html", error=error)
+        error = "VIRHE: Liian lyhyt nimi (väh. 3 merkkiä)!"
+        flash(error)
+        return redirect("/register")
     if password1 != password2:
-        error = "VIRHE: Salasanat eivät täsmää."
-        return render_template("error_message.html", error=error)
+        error = "VIRHE: Salasanat eivät täsmää!"
+        flash(error)
+        return redirect("/register")
     if len(password1) < 3:
-        error = "VIRHE: Liian lyhyt salasana (väh. 3 merkkiä)"
-        return render_template("error_message.html", error=error)
-    
+        error = "VIRHE: Liian lyhyt salasana (väh. 3 merkkiä)!"
+        flash(error)
+        return redirect("/register") 
+       
     password_hash = generate_password_hash(password1)
 
     try:
         users.create_user(username, password_hash)
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
- 
+    
+    flash(f"Tunnus {username} luotu! Voit nyt kirjautua sisään.")
     return redirect("/")
 
 @app.route("/login", methods=["POST"])
@@ -55,11 +89,13 @@ def login():
         res = users.get_hash(username)
     else:
         error = "VIRHE: Et voi kirjautua ilman tunnusta!"
-        return render_template("error_message.html", login_error=error)
+        flash(error)
+        return redirect("/")
 
     # get_hash palauttaa sqlite-olion jos käyttäjä ja salasana löytyy, muuten virheviestin:
     if type(res) is str: 
-        return render_template("error_message.html", login_error=res)
+        flash("VIRHE: Tunnus/salasana eivät ole tietokannassa!")
+        return redirect("/")
     else:
         user_id = res["id"]
         password_hash = res["password_hash"]
@@ -98,11 +134,12 @@ def create_item():
     director = request.form["director"]
     year = request.form["year"]
 
-    if len(movie_title) <= 75 and len(movie_review) <= 1000 and int(movie_rating) >= 0 and int(movie_rating) <= 10 and genre and director and year and len(director) <= 50:
+    if check_movie(movie_title, movie_rating, movie_review, genre, director, year):
         reviews.add_review(user_id, movie_title, movie_rating, movie_review, genre, director, year)
     else:
         error = "VIRHE: Tarkista syöte."
-        return render_template("error_message.html", input_error=error)
+        flash(error)
+        return redirect("/new_item")
 
     return redirect("/movie_reviews")
 
@@ -195,7 +232,12 @@ def update_review():
     director = request.form["director"]
     year = request.form["year"]
 
-    reviews.update_review(review_id, movie_title, movie_rating, movie_review, genre, director, year)
+    if check_movie(movie_title, movie_rating, movie_review, genre, director, year):
+        reviews.update_review(review_id, movie_title, movie_rating, movie_review, genre, director, year)
+    else:
+        error = "VIRHE: Älä jaksa oikeesti kokoajan tehä kepposia"
+        flash(error)
+        return redirect("/edit_review/" + str(review_id))
 
     return redirect("/movie_reviews/" + review_id)
 

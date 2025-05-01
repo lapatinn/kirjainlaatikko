@@ -31,6 +31,13 @@
         <a href="/logout">Kirjaudu ulos</a>
       </p>
       {% else %}
+      
+      {% for message in get_flashed_messages() %}
+      <p>
+        <b>{{ message }}</b>
+      </p>
+      {% endfor %}
+
       <p>
         <a href="/register">Luo tunnus</a>
       </p>

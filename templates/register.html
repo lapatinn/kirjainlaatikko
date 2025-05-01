@@ -20,6 +20,13 @@
   </div>
   <div class="content">
   <form action="/create" method="post">
+
+    {% for message in get_flashed_messages() %}
+    <p>
+      <b>{{ message }}</b>
+    </p>
+    {% endfor %}
+
     <p>
       Tunnus: <br />
       <input type="text" name="username" maxlength="16" required/>

@@ -17,6 +17,13 @@
     <a href="/all_users">Käyttäjät</a> 
   </div>
   <div class="content">
+
+    {% for message in get_flashed_messages() %}
+    <p>
+      <b>{{ message }}</b>
+    </p>
+    {% endfor %}
+
   <form action="/update_review" method="post">
     <p>
       Elokuva: <br />

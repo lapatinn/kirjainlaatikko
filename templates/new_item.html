@@ -18,6 +18,13 @@
   </div>
 
   <div class="content">
+
+  {% for message in get_flashed_messages() %}
+  <p>
+    <b>{{ message }}</b>
+  </p>
+  {% endfor %}
+
   {% if session.username %}
   <form action="/create_item" method="post">
     <p>
