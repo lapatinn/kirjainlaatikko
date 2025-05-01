@@ -1,8 +1,8 @@
-from flask import Flask
-from flask import render_template, request, redirect, session, abort, flash # flask
-from werkzeug.security import generate_password_hash, check_password_hash # werkzeug
-import sqlite3 # sql
-import config, reviews, users # omat moduulit
+from flask import Flask, render_template, request, redirect, session, abort, flash 
+from werkzeug.security import generate_password_hash, check_password_hash 
+import sqlite3 
+import config 
+from sql import users, reviews
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -24,8 +24,8 @@ def check_movie(title, rating, review, genre, director, year):
         # Tarkistan vaan titlen koska ainoo joka aiheuttaa ongelmii kosk arvosteluu ei voi klikkaa
         # muut saa periaattees olla tyhjii iha sama ei ne vaikuta mihkää mitenkää
         if title == " " or title == "  " or title == "   " or title == "    " or title == "     ": 
-        # Ihan vitun luolamies logiikkaketju mut sano mun sanoneen tää on bulletproof :DD
-        # Ei kukaa laittais yli 5 välilyöntii jos tarkotuksena on tehä "empty title troll"
+        # Ihan vitun luolamies logiikkaketju mut sano mun sanoneen tää on bulletproof
+        # Ei kukaa laittais yli 5 välilyöntii jos tarkotuksena on tehä "empty title troll" (tämä on vitsi)
             return False
         string_length = True
     else:
