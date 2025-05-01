@@ -29,7 +29,10 @@ def get_review(item_id):
     ;"""
 
     res = db.query(sql, [item_id])
-    return res[0] if res else "VIRHE: Kysely ei tuottanut tulosta. Kyseiselle id-numerolle ei ole arvostelua."
+    
+    error = "VIRHE: Kysely ei tuottanut tulosta. Kyseiselle id-numerolle ei ole arvostelua."
+
+    return res[0] if res else error
 
 def update_review(review_id, movie_title, movie_rating, movie_review, genre, director, year):
     sql = """UPDATE reviews SET movie = ?,
@@ -101,7 +104,9 @@ def get_comment(comment_id):
 
     res = db.query(sql, [comment_id])
 
-    return res[0] if res else "VIRHE: Kysely ei tuottanut tulosta. Kyseiselle id-numerolle ei ole kommenttia."
+    error = "VIRHE: Kysely ei tuottanut tulosta. Kyseiselle id-numerolle ei ole kommenttia."
+
+    return res[0] if res else error
 
 def remove_comment(comment_id):
     sql = """DELETE FROM comments

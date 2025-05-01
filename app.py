@@ -21,8 +21,6 @@ def check_movie(title, rating, review, genre, director, year):
     
     # Merkkijonot oikean pituiset
     if len(title) > 0 and len(title) <= 75 and len(review) > 0 and len(review) <= 1000 and len(director) > 0 and len(director) <= 50:
-        # Tarkistan vaan titlen koska ainoo joka aiheuttaa ongelmii kosk arvosteluu ei voi klikkaa
-        # muut saa periaattees olla tyhjii iha sama ei ne vaikuta mihkää mitenkää
         if title == " " or title == "  " or title == "   " or title == "    " or title == "     ": 
         # Ihan vitun luolamies logiikkaketju mut sano mun sanoneen tää on bulletproof
         # Ei kukaa laittais yli 5 välilyöntii jos tarkotuksena on tehä "empty title troll" (tämä on vitsi)

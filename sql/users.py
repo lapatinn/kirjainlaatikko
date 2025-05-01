@@ -14,7 +14,9 @@ def get_hash(username): # lol
                 ;"""
     res = db.query(sql, [username])
 
-    return res[0] if res else "VIRHE: Kysely ei tuottanut tulosta. Annettua käyttäjänimeä ei ole tietokannassa."
+    error = "VIRHE: Kysely ei tuottanut tulosta. Annettua käyttäjänimeä ei ole tietokannassa."
+
+    return res[0] if res else error
     
 def get_user(user_id):
     sql = """SELECT id, username
@@ -24,7 +26,9 @@ def get_user(user_id):
     
     res = db.query(sql, [user_id])
 
-    return res[0] if res else "VIRHE: Kysely ei tuottanut tulosta. Kyseiselle id-numerolle ei ole käyttäjää."
+    error = "VIRHE: Kysely ei tuottanut tulosta. Kyseiselle id-numerolle ei ole käyttäjää."
+
+    return res[0] if res else error
 
 def get_users_reviews(user_id):
     sql = """SELECT R.movie, R.id
