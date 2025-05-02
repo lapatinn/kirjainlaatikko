@@ -1,15 +1,17 @@
-import sqlite3, db
+import db
 
 def add_review(user_id, movie_title, movie_rating, movie_review, genre, director, year):
     sql = """INSERT INTO reviews (user_id, movie, rating, review) 
-            VALUES (?, ?, ?, ?)"""
+            VALUES (?, ?, ?, ?)
+            ;"""
     
     db.execute(sql, [user_id, movie_title, movie_rating, movie_review])
 
     rev_id = db.last_insert_id()
 
     sql1 = """INSERT INTO movie_info (review_id, genre, director, year)
-            VALUES (?, ?, ?, ?)"""
+            VALUES (?, ?, ?, ?)
+            ;"""
 
     db.execute(sql1, [rev_id, genre, director, year])
 
@@ -23,10 +25,10 @@ def fetch_reviews():
 
 def get_review(item_id):
     sql = """SELECT R.id, R.movie, R.rating, R.review, R.user_id, U.username
-    FROM reviews R, users U
-    WHERE R.user_id = U.id
-    AND R.id = ?
-    ;"""
+            FROM reviews R, users U
+            WHERE R.user_id = U.id
+            AND R.id = ?
+            ;"""
 
     res = db.query(sql, [item_id])
     
@@ -53,8 +55,8 @@ def update_review(review_id, movie_title, movie_rating, movie_review, genre, dir
 
 def remove_review(item_id):
     sql = """DELETE FROM reviews
-    WHERE id = ?
-    ;"""
+            WHERE id = ?
+            ;"""
 
     db.execute(sql, [item_id])
 
@@ -100,7 +102,8 @@ def get_comment(comment_id):
     sql = """SELECT C.content, C.id, C.user_id, C.review_id
             FROM comments C, users U
             WHERE C.id = ?
-            AND C.user_id = U.id"""
+            AND C.user_id = U.id
+            ;"""
 
     res = db.query(sql, [comment_id])
 

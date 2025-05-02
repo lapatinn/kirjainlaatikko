@@ -10,6 +10,7 @@
   <div class="header">
     <h1>Lisää uusi elokuva-arvostelu</h1>
   </div>
+  
   <div class="nav">
     <a href="/movie_reviews">Arvostelut</a> |
     <a href="/new_item">Luo arvostelu</a> |
@@ -18,7 +19,6 @@
   </div>
 
   <div class="content">
-
   {% for message in get_flashed_messages() %}
   <p>
     <b>{{ message }}</b>

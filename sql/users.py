@@ -44,7 +44,8 @@ def get_users_reviews(user_id):
 def fetch_users():
     sql = """SELECT username, id
             FROM users
-            ORDER BY username DESC"""
+            ORDER BY username DESC
+            ;"""
     
     res = db.query(sql)
 

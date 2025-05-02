@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, abort, flash 
+from flask import Flask, render_template, request, redirect, session, flash 
 from werkzeug.security import generate_password_hash, check_password_hash 
 import sqlite3 
 import config 
@@ -9,7 +9,7 @@ app.secret_key = config.secret_key
 
 def require_login():
     if "user_id" not in session:
-        error = "VIRHE: Et ole kirjautunut sisään."
+        error = "VIRHE: Et ole kirjautunut sisään!"
         return render_template("error_message.html", login_error=error)
     
 def check_movie(title, rating, review, genre, director, year):
@@ -19,12 +19,8 @@ def check_movie(title, rating, review, genre, director, year):
     else:
         return False
     
-    # Merkkijonot oikean pituiset
-    if len(title) > 0 and len(title) <= 75 and len(review) > 0 and len(review) <= 1000 and len(director) > 0 and len(director) <= 50:
-        if title == " " or title == "  " or title == "   " or title == "    " or title == "     ": 
-        # Ihan vitun luolamies logiikkaketju mut sano mun sanoneen tää on bulletproof
-        # Ei kukaa laittais yli 5 välilyöntii jos tarkotuksena on tehä "empty title troll" (tämä on vitsi)
-            return False
+    # Merkkijonot oikean pituiset, otsikko ei tyhjä
+    if not title.isspace() and len(title) > 0 and len(title) <= 75 and len(review) > 0 and len(review) <= 1000 and len(director) > 0 and len(director) <= 50:
         string_length = True
     else:
         return False
@@ -35,6 +31,7 @@ def check_movie(title, rating, review, genre, director, year):
     else:
         return False
     
+    # Kaikki ok
     if data_exists and string_length and int_values:
         return True
     else:
@@ -42,7 +39,7 @@ def check_movie(title, rating, review, genre, director, year):
 
 @app.route("/")
 def index():
-    movies = ["Terminator", "Star Wars", "Madagascar", "Autot 2", "Matin ennakkotehtävä"]
+    movies = ["Terminator", "Star Wars", "Madagascar", "Autot 2", "Matin ennakkotehtävä (rare)"]
     return render_template("index.html", message="Parhaat elokuvat 2025", items=movies)
 
 @app.route("/register")
@@ -73,7 +70,9 @@ def create():
     try:
         users.create_user(username, password_hash)
     except sqlite3.IntegrityError:
-        return "VIRHE: tunnus on jo varattu"
+        error = "VIRHE: Tunnus on jo varattu!"
+        flash(error)
+        return redirect("/register")
     
     flash(f"Tunnus {username} luotu! Voit nyt kirjautua sisään.")
     return redirect("/")
@@ -154,7 +153,7 @@ def create_comment():
     if len(comment) <= 100:
         reviews.add_comment(user_id, review_id, comment)   
     else:
-        error = "VIRHE: Kommenttisi on liian pitkä"
+        error = "VIRHE: Kommenttisi on liian pitkä!"
         return render_template("error_message.html", comment_error=error)
     
     return redirect("/movie_reviews/" + review_id)
@@ -173,12 +172,12 @@ def remove_comment(comment_id):
 
     if request.method == "GET":
         if comment["user_id"] != session["user_id"]:
-            error = "VIRHE: Et voi poistaa muiden kommentteja."
+            error = "VIRHE: Et voi poistaa muiden kommentteja!"
             return render_template("error_message.html", login_error=error)
 
     if request.method == "POST":
         if comment["user_id"] != session["user_id"]:
-            error = "VIRHE: Et voi poistaa muiden kommentteja."
+            error = "VIRHE: Et voi poistaa muiden kommentteja!"
             return render_template("error_message.html", login_error=error)
         
         review_id = comment[3]
@@ -204,7 +203,7 @@ def edit_item(item_id):
         return render_template("error_message.html", rnf_error=review)
 
     if review["user_id"] != session["user_id"]:
-        error = "VIRHE: Et voi muokata muiden arvosteluja."
+        error = "VIRHE: Et voi muokata muiden arvosteluja!"
         return render_template("error_message.html", rnf_error=error)
 
     return render_template("edit.html", item=review, info=info[0])
@@ -219,7 +218,7 @@ def update_review():
     review = reviews.get_review(review_id)
 
     if review["user_id"] != session["user_id"]:
-        error = "VIRHE: Et voi muokata muiden arvosteluja."
+        error = "VIRHE: Et voi muokata muiden arvosteluja!"
         return render_template("error_message.html", login_error=error)
 
     movie_title = request.form["title"]
@@ -233,7 +232,7 @@ def update_review():
     if check_movie(movie_title, movie_rating, movie_review, genre, director, year):
         reviews.update_review(review_id, movie_title, movie_rating, movie_review, genre, director, year)
     else:
-        error = "VIRHE: Älä jaksa oikeesti kokoajan tehä kepposia.. (Tarkista syöte)"
+        error = "VIRHE: Tarkista syöte!"
         flash(error)
         return redirect("/edit_review/" + str(review_id))
 
@@ -248,7 +247,7 @@ def remove_review(item_id):
     if request.method == "GET":
         review = reviews.get_review(item_id)
         if review["user_id"] != session["user_id"]:
-            error = "VIRHE: Et voi poistaa muiden arvosteluja."
+            error = "VIRHE: Et voi poistaa muiden arvosteluja!"
             return render_template("error_message.html", login_error=error)
         
         return render_template("remove_review.html", item=review)
@@ -258,7 +257,7 @@ def remove_review(item_id):
 
         if "remove" in request.form:
             if review["user_id"] != session["user_id"]:
-                error = "VIRHE: Et voi poistaa muiden arvosteluja."
+                error = "VIRHE: Et voi poistaa muiden arvosteluja!"
                 return render_template("error_message.html", login_error=error)
             else:
                 reviews.remove_review(item_id)
