@@ -6,6 +6,7 @@ Suorita ennen käyttöä:
 sqlite3 database.db < schema.sql
 
 Tavoitteet:
+
 * Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
 
 * Käyttäjä pystyy lisäämään sovellukseen elokuva-arvosteluja. Lisäksi käyttäjä pystyy muokkaamaan ja poistamaan lisäämiään elokuva-arvosteluja.
@@ -19,6 +20,12 @@ Tavoitteet:
 * Käyttäjä pystyy valitsemaan arvostelulle/arvostelemalleen elokuvalle yhden tai useamman luokittelun (Elokuvan genre, julkaisuvuosi, arvosana). Mahdolliset luokat ovat tietokannassa.
 
 * Sovelluksessa on pääasiallisen arvostelun lisäksi kommentteja, käyttäjä voi lisätä kommentteja omiin tai muiden arvosteluihin. 
+
+Sovelluksen lopullinen tila (02.05):
+
+Sovellus ilmeisesti toimii. Käyttäjä voi luoda tunnuksen, kirjautua ja arvostella elokuvia. Arvosteluja voi katsella omalta sivulta ja samoin myös käyttäjiä. Klikkaamalla käyttäjää pääsee käyttäjän henkilökohtaiselle sivulle, joka näyttää hänen luomat arvostelut ja niiden määrän. Käyttäjä voi muokata ja poistaa arvostelujaan. Arvosteluihin voi myös jättää kommentteja, joita voi poistaa. Arvosteluja voi myös hakea arvostellun elokuvan nimen perusteella. 
+Sovellus tarkistaa käyttäjän syötteitä ja oikeuksia sekä html-pohjissa, että pääohjelmassa. Virheviesteihin on varauduttu ja suurin osa niistä ilmestyy mukavasti flash-ilmoituksena. Suurimpaan osaan virhetilanteista (tietääkseni) on varauduttu.
+Yleisesti ottaen sovellus on aika yksinkertainen ja varsin tylsä, mutta mielestäni toteutus onnistui aika hyvin ja kaikki vaikuttaisi toimivan oikein. Css-tyyli on hyvin yksinkertainen, mutta ihan miellyttävä. 
 
 Log:
 
@@ -72,3 +79,7 @@ Added css styles. Modified frontpage. Made changes to arrangement and return lin
 Moved most error messages from a separate page to a flash()-call. This applies to errors that would appear on a specific page, since flash() needs a redirect in order to update the page and show the message. Errors that occur when a user epicly trolls me by typing in an address that is not defined (or otherwise inaccessible due to whatever), will still redirect to a separate page. 
 Had to make a separate function for checking the integrity of movie reviews: the if-and statement chain was taking up a stupid amount of horizontal space, much cleaner. In the process realized that editing a review has no restrictions whatsoever, fixed that. 
 Added an alt-thingy to the image on the frontpage and "cleaned up" the code a little and uhh yeah. 
+
+02.05:
+
+Very minor cleanup.
