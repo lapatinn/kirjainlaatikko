@@ -83,3 +83,7 @@ Added an alt-thingy to the image on the frontpage and "cleaned up" the code a li
 02.05:
 
 Very minor cleanup.
+
+13.07:
+
+Added CSRF checks...

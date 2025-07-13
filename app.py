@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, session, flash 
+from flask import Flask, render_template, request, redirect, session, flash, abort
 from werkzeug.security import generate_password_hash, check_password_hash 
 import sqlite3 
+import secrets
 import config 
 from sql import users, reviews
 
@@ -11,6 +12,12 @@ def require_login():
     if "user_id" not in session:
         error = "VIRHE: Et ole kirjautunut sisään!"
         return render_template("error_message.html", login_error=error)
+    
+def check_csrf():
+    if "csrf_token" not in request.form:
+        abort(403)
+    if request.form["csrf_token"] != session["csrf_token"]:
+        abort(403)
     
 def check_movie(title, rating, review, genre, director, year):
     # Kaikki olemassa
@@ -85,7 +92,7 @@ def login():
     if username and password:
         res = users.get_hash(username)
     else:
-        error = "VIRHE: Et voi kirjautua ilman tunnusta!"
+        error = "VIRHE: Tunnus ja salasana vaadittu!"
         flash(error)
         return redirect("/")
 
@@ -100,6 +107,8 @@ def login():
     if check_password_hash(password_hash, password):
         session["user_id"] = user_id
         session["username"] = username
+        session["csrf_token"] = secrets.token_hex(16)
+
         return redirect("/")
     else:
         error = "VIRHE: väärä tunnus tai salasana!"
@@ -121,6 +130,8 @@ def create_item():
     login_error = require_login()
     if login_error:
         return login_error
+    
+    check_csrf()
     
     user_id = session["user_id"] # Session on oltava olemassa jotta arvostelu voidaan jättää
     movie_title = request.form["title"]
@@ -145,6 +156,8 @@ def create_comment():
     login_error = require_login()
     if login_error:
         return login_error
+    
+    check_csrf()
     
     comment = request.form["comment"]
     user_id =  session["user_id"]
@@ -176,6 +189,7 @@ def remove_comment(comment_id):
             return render_template("error_message.html", login_error=error)
 
     if request.method == "POST":
+        check_csrf()
         if comment["user_id"] != session["user_id"]:
             error = "VIRHE: Et voi poistaa muiden kommentteja!"
             return render_template("error_message.html", login_error=error)
@@ -213,6 +227,8 @@ def update_review():
     login_error = require_login()
     if login_error:
         return login_error
+    
+    check_csrf()
     
     review_id = request.form["item_id"]
     review = reviews.get_review(review_id)
@@ -253,6 +269,7 @@ def remove_review(item_id):
         return render_template("remove_review.html", item=review)
     
     if request.method == "POST":
+        check_csrf()
         review = reviews.get_review(item_id)
 
         if "remove" in request.form:

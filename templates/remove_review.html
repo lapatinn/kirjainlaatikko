@@ -22,6 +22,7 @@
     <p>Arvostelu: {{ item.movie }} | {{ item.rating }} / 10</p>
     <p>Haluatko varmasti poistaa arvostelun?</p>
   <form action="/remove_review/{{ item.id }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" name="remove" value="Poista arvostelu">
     <input type="submit" name="return" value="Palaa takaisin">
     <p>
