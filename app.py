@@ -121,7 +121,7 @@ def logout():
         del session["username"]
         return redirect("/")
 
-@app.route("/new_item") # uusi arvostelu
+@app.route("/new_item")
 def new_item():
     return render_template("new_item.html")
 
@@ -133,7 +133,7 @@ def create_item():
     
     check_csrf()
     
-    user_id = session["user_id"] # Session on oltava olemassa jotta arvostelu voidaan jättää
+    user_id = session["user_id"]
     movie_title = request.form["title"]
     movie_rating = request.form["rating"]
     movie_review = request.form["review"]
@@ -180,7 +180,6 @@ def remove_comment(comment_id):
     comment = reviews.get_comment(comment_id)
 
     if type(comment) is str:
-        # Tähän login error koska vain etusivulle nappi
         return render_template("error_message.html", login_error=comment)
 
     if request.method == "GET":
@@ -300,15 +299,15 @@ def movie_reviews():
 
 @app.route("/movie_reviews/<int:item_id>")
 def page(item_id):
-    review = reviews.get_review(item_id) # Hakee id:llä kaiken arvosteluun liittyvän tiedon
-    info = reviews.get_info(item_id) # Hakee luokat
+    review = reviews.get_review(item_id) 
+    info = reviews.get_info(item_id) 
     comments = reviews.fetch_comments(item_id)
 
     if type(review) is str:
         # rnf = Review Not Found 
         return render_template("error_message.html", rnf_error=review)
     else:
-        return render_template("show_review.html", item=review, info=info, comments=comments) # passataan id ja info html tiedostoon
+        return render_template("show_review.html", item=review, info=info, comments=comments)
 
 @app.route("/show_user/<int:user_id>")
 def show_user(user_id):
