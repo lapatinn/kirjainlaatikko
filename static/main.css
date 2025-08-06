@@ -20,6 +20,19 @@ body {
     color: rgb(110, 47, 128);
   }
 
+  ul {
+    margin: auto;
+    padding-top: 1.0em;
+    padding-bottom: 1.0em;
+    padding-right: 1.0em;
+    padding-left: 1.0em
+  }
+
+  li {
+    margin: auto;
+    padding: 0.3em;
+  }
+
 .header {
   padding: 0.5em;
   margin: 0.5em;
