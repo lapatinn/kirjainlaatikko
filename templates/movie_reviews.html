@@ -25,7 +25,11 @@
     {% if items %}
     <ul>
         {% for item in items %}
-        <li><a href="/movie_reviews/{{ item.id }}">{{ item.movie }}</a></li>
+        <p><a href="/movie_reviews/{{ item.id }}">{{ item.movie }}</a>
+            <br />
+            <p>Tekijä: {{ item.username }} | Arvosana: {{ item.rating }}</p>
+            <hr />
+        </p>
         {% endfor %}
     </ul>
     {% else %}
