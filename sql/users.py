@@ -7,7 +7,7 @@ def create_user(username, password_hash):
     
     db.execute(sql, [username, password_hash])
 
-def get_hash(username): # lol
+def get_hash(username):
     sql = """SELECT id, password_hash 
                 FROM users 
                 WHERE username = ?
