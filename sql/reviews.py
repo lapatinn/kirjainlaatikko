@@ -16,9 +16,10 @@ def add_review(user_id, movie_title, movie_rating, movie_review, genre, director
     db.execute(sql1, [rev_id, genre, director, year])
 
 def fetch_reviews():
-    sql = """SELECT id, user_id, movie, rating, review
-            FROM reviews
-            ORDER BY id DESC
+    sql = """SELECT R.id, R.user_id, R.movie, R.rating, R.review, U.username
+            FROM reviews R, users U
+            WHERE R.user_id = U.id
+            ORDER BY R.id DESC
             ;"""
     
     return db.query(sql)
