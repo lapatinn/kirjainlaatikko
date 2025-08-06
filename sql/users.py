@@ -41,12 +41,23 @@ def get_users_reviews(user_id):
 
     return res if res else None
 
-def fetch_users():
+def fetch_users(page, page_size):
     sql = """SELECT username, id
             FROM users
             ORDER BY username DESC
+            LIMIT ? OFFSET ?
             ;"""
     
-    res = db.query(sql)
+    limit = page_size
+    offset = page_size * (page - 1)
+    
+    res = db.query(sql, [limit, offset])
 
     return res if res else None
+
+def users_count():
+    sql = """SELECT COUNT(id)
+            FROM users
+            ;"""
+    
+    return db.query(sql)[0]

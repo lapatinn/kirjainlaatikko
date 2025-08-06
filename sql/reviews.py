@@ -15,14 +15,25 @@ def add_review(user_id, movie_title, movie_rating, movie_review, genre, director
 
     db.execute(sql1, [rev_id, genre, director, year])
 
-def fetch_reviews():
+def fetch_reviews(page, page_size):
     sql = """SELECT R.id, R.user_id, R.movie, R.rating, R.review, U.username
             FROM reviews R, users U
             WHERE R.user_id = U.id
             ORDER BY R.id DESC
+            LIMIT ? OFFSET ?
             ;"""
     
-    return db.query(sql)
+    limit = page_size
+    offset = page_size * (page - 1)
+    
+    return db.query(sql, [limit, offset])
+
+def review_count():
+    sql = """SELECT COUNT(id)
+        FROM reviews
+        ;"""
+    
+    return db.query(sql)[0]
 
 def get_review(item_id):
     sql = """SELECT R.id, R.movie, R.rating, R.review, R.user_id, U.username

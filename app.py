@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3 
 import secrets
 import config 
+import math
 from sql import users, reviews
 
 app = Flask(__name__)
@@ -293,9 +294,20 @@ def search_review():
     return render_template("find_review.html", query=query, results=results)
 
 @app.route("/movie_reviews")
-def movie_reviews():
-    all_reviews = reviews.fetch_reviews()
-    return render_template("movie_reviews.html", items=all_reviews)
+@app.route("/movie_reviews/<int:page>")
+def movie_reviews(page=1):
+    page_size = 10
+    review_count = reviews.review_count()[0]
+    page_count = math.ceil(int(review_count) / page_size)
+    page_count = max(page_count, 1)
+
+    if page < 1:
+        return redirect("/movie_reviews/1")
+    if page > page_count:
+        return redirect("/movie_reviews/" + str(page_count))
+
+    all_reviews = reviews.fetch_reviews(page, page_size)
+    return render_template("movie_reviews.html", items=all_reviews, page=page, page_count=page_count)
 
 @app.route("/movie_reviews/<int:item_id>")
 def page(item_id):
@@ -321,9 +333,20 @@ def show_user(user_id):
         return render_template("show_user.html", user=user, reviews=items)
 
 @app.route("/all_users")
-def all_users():
-    guys = users.fetch_users()
-    return render_template("all_users.html", users=guys)
+@app.route("/all_users/<int:page>")
+def all_users(page=1):
+    page_size = 20
+    user_count = users.users_count()[0]
+    page_count = math.ceil(int(user_count) / page_size)
+    page_count = max(page_count, 1)
+
+    if page < 1:
+        return redirect("/all_users/1")
+    if page > page_count:
+        return redirect("/all_users/" + str(page_count))
+
+    guys = users.fetch_users(page, page_size)
+    return render_template("all_users.html", users=guys, page=page, page_count=page_count)
 
 if __name__ == "__main__":
     app.run(debug=False)
