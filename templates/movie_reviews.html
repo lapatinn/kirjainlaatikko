@@ -15,6 +15,7 @@
     </div>
     
     <div class="nav">
+        <a href="/">Etusivulle</a> |
         <a href="/movie_reviews">Arvostelut</a> |
         <a href="/new_item">Luo arvostelu</a> |
         <a href="/find_review">Etsi arvostelu</a> |
@@ -25,7 +26,7 @@
     {% if items %}
     <ul>
         {% for item in items %}
-        <p><a href="/movie_reviews/{{ item.id }}">{{ item.movie }}</a>
+        <p><a href="/movie_review/{{ item.id }}">{{ item.movie }}</a>
             <br />
             <p>Tekijä: {{ item.username }} | Arvosana: {{ item.rating }}</p>
             <hr />
@@ -42,9 +43,6 @@
         Sivu {{ page }}/{{ page_count }}
         <a href="/movie_reviews/{{ page + 1 }}">&gt;&gt;</a>
         <hr />
-    </p>
-    <p>
-        <a href="/">Etusivulle</a>
     </p>
     </div>
 </body>

@@ -11,6 +11,7 @@
     </div>
 
     <div class="nav">
+        <a href="/">Etusivulle</a> |
         <a href="/movie_reviews">Arvostelut</a> |
         <a href="/new_item">Luo arvostelu</a> |
         <a href="/find_review">Etsi arvostelu</a> |
@@ -33,15 +34,12 @@
     
     <ul>
         {% for rev in reviews %}
-        <li><a href="/movie_reviews/{{ rev.id }}">{{ rev.movie }}</a></li>
+        <li><a href="/movie_review/{{ rev.id }}">{{ rev.movie }}</a></li>
         {% endfor %}
     </ul>
     {% else %}
     <p>Käyttäjä {{ user.username }} ei ole luonut vielä yhtäkään elokuva-arvostelua.</p>
     {% endif %}
-    <p> 
-        <a href="/">Etusivulle</a> 
-    </p>
     </div>
     
 </body>

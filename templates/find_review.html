@@ -12,6 +12,7 @@
     </div>
 
     <div class="nav">
+        <a href="/">Etusivulle</a> |
         <a href="/movie_reviews">Arvostelut</a> |
         <a href="/new_item">Luo arvostelu</a> |
         <a href="/find_review">Etsi arvostelu</a> |
@@ -36,7 +37,7 @@
     {% if results %}
     <ul>
         {% for item in results %}
-        <li><a href="/movie_reviews/{{ item.id }}">{{ item.movie }}</a></li>
+        <li><a href="/movie_review/{{ item.id }}">{{ item.movie }}</a></li>
         {% endfor %}
     </ul>
     {% else %}

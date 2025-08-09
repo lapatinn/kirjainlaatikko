@@ -170,7 +170,7 @@ def create_comment():
         error = "VIRHE: Kommenttisi on liian pitkä!"
         return render_template("error_message.html", comment_error=error)
     
-    return redirect("/movie_reviews/" + review_id)
+    return redirect("/movie_review/" + review_id)
 
 @app.route("/remove_comment/<int:comment_id>", methods=["GET","POST"])
 def remove_comment(comment_id):
@@ -198,9 +198,9 @@ def remove_comment(comment_id):
 
         if "remove" in request.form:
             reviews.remove_comment(comment_id)
-            return redirect("/movie_reviews/" + str(review_id))
+            return redirect("/movie_review/" + str(review_id))
         else:
-            return redirect("/movie_reviews/" + str(review_id))
+            return redirect("/movie_review/" + str(review_id))
 
     return render_template("remove_comment.html", comment=comment)
 
@@ -252,7 +252,7 @@ def update_review():
         flash(error)
         return redirect("/edit_review/" + str(review_id))
 
-    return redirect("/movie_reviews/" + review_id)
+    return redirect("/movie_review/" + review_id)
 
 @app.route("/remove_review/<int:item_id>", methods=["GET","POST"])
 def remove_review(item_id):
@@ -280,7 +280,7 @@ def remove_review(item_id):
                 reviews.remove_review(item_id)
                 return redirect("/movie_reviews")
         else:
-            return redirect("/movie_reviews/" + str(item_id))
+            return redirect("/movie_review/" + str(item_id))
         
 @app.route("/find_review")
 def search_review():
@@ -309,7 +309,7 @@ def movie_reviews(page=1):
     all_reviews = reviews.fetch_reviews(page, page_size)
     return render_template("movie_reviews.html", items=all_reviews, page=page, page_count=page_count)
 
-@app.route("/movie_reviews/<int:item_id>")
+@app.route("/movie_review/<int:item_id>")
 def page(item_id):
     review = reviews.get_review(item_id) 
     info = reviews.get_info(item_id) 

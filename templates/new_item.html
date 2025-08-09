@@ -12,6 +12,7 @@
   </div>
   
   <div class="nav">
+    <a href="/">Etusivulle</a> |
     <a href="/movie_reviews">Arvostelut</a> |
     <a href="/new_item">Luo arvostelu</a> |
     <a href="/find_review">Etsi arvostelu</a> |
@@ -66,9 +67,6 @@
     </p>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Luo arvostelu" />
-    <p>
-    <a href="/">Etusivulle</a>
-    </p>
   </form>
 
    {% else %}
@@ -85,7 +83,7 @@
     <input type="submit" value="Kirjaudu">
   </form>
     <h4>Ei tunnusta?</h4>
-    <p><a href="/register">Rekisteröidy</a> | <a href="/">Etusivulle</a>
+    <p><a href="/register">Rekisteröidy</a>
     </p>
   {% endif %}
   </div>
