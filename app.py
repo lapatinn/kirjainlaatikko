@@ -24,9 +24,9 @@ def check_csrf():
 
 def check_movie(title, rating, review, genre, director, year):
     # Check for non-empty title and string length
-    if title.isspace() or len(title) <= 0 or len(title) >= 75 \
-        or len(review) <= 0 or len(review) >= 1000 \
-        or len(director) <= 0 or len(director) >= 50:
+    if title.isspace() or len(title) <= 0 or len(title) > 75 \
+        or len(review) <= 0 or len(review) > 1000 \
+        or len(director) <= 0 or len(director) > 50:
         return False
 
     # Check integers
