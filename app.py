@@ -290,7 +290,7 @@ def remove_review(item_id):
                 return redirect("/movie_reviews")
         else:
             return redirect("/movie_review/" + str(item_id))
- 
+
 # Search page
 @app.route("/find_review")
 def search_review():
