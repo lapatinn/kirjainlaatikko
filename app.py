@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, redirect, session, flash, abort
-from werkzeug.security import generate_password_hash, check_password_hash 
-import sqlite3 
-import secrets
-import config 
+import sqlite3
 import math
+import secrets
+
+from flask import Flask, render_template, request, redirect, session, flash, abort
+from werkzeug.security import generate_password_hash, check_password_hash
+
+import config
 from sql import users, reviews
 
 app = Flask(__name__)
@@ -13,26 +15,29 @@ def require_login():
     if "user_id" not in session:
         error = "VIRHE: Et ole kirjautunut sisään!"
         return render_template("error_message.html", login_error=error)
-    
+
 def check_csrf():
     if "csrf_token" not in request.form:
         abort(403)
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
-    
+
 def check_movie(title, rating, review, genre, director, year):
     # Check for non-empty title and string length
-    if title.isspace() or len(title) <= 0 or len(title) >= 75 or len(review) <= 0 or len(review) >= 1000 or len(director) <= 0 or len(director) >= 50:
+    if title.isspace() or len(title) <= 0 or len(title) >= 75 \
+        or len(review) <= 0 or len(review) >= 1000 \
+        or len(director) <= 0 or len(director) >= 50:
         return False
-    
+
     # Check integers
-    if rating == "" or int(rating) <= 0 or int(rating) > 10 or year == "" or int(year) < 1878 or int(year) > 2025:
+    if rating == "" or int(rating) <= 0 or int(rating) > 10 \
+        or year == "" or int(year) < 1878 or int(year) > 2025:
         return False
-    
+
     # Check that genre exists
     if genre == "":
         return False
-    
+
     return True
 
 # Frontpage
@@ -64,8 +69,8 @@ def create():
     if len(password1) < 3:
         error = "VIRHE: Liian lyhyt salasana (väh. 3 merkkiä)!"
         flash(error)
-        return redirect("/register") 
-       
+        return redirect("/register")
+
     password_hash = generate_password_hash(password1)
 
     try:
@@ -74,7 +79,7 @@ def create():
         error = "VIRHE: Tunnus on jo varattu!"
         flash(error)
         return redirect("/register")
-    
+
     flash(f"Tunnus {username} luotu! Voit nyt kirjautua sisään.")
     return redirect("/")
 
@@ -92,7 +97,7 @@ def login():
         return redirect("/")
 
     # get_hash returns an sql-object if no errors, otherwise the error message will be returned
-    if type(res) is str: 
+    if type(res) is str:
         flash(res)
         return redirect("/")
     else:
@@ -128,9 +133,9 @@ def create_item():
     login_error = require_login()
     if login_error:
         return login_error
-    
+
     check_csrf()
-    
+
     user_id = session["user_id"]
     movie_title = request.form["title"]
     movie_rating = request.form["rating"]
@@ -155,19 +160,19 @@ def create_comment():
     login_error = require_login()
     if login_error:
         return login_error
-    
+
     check_csrf()
-    
+
     comment = request.form["comment"]
     user_id =  session["user_id"]
     review_id = request.form["review_id"]
 
     if len(comment) <= 100:
-        reviews.add_comment(user_id, review_id, comment)   
+        reviews.add_comment(user_id, review_id, comment)
     else:
         error = "VIRHE: Kommenttisi on liian pitkä!"
         return render_template("error_message.html", comment_error=error)
-    
+
     return redirect("/movie_review/" + review_id)
 
 # Remove comment handler
@@ -176,7 +181,7 @@ def remove_comment(comment_id):
     login_error = require_login()
     if login_error:
         return login_error
-    
+
     comment = reviews.get_comment(comment_id)
 
     if type(comment) is str:
@@ -192,7 +197,7 @@ def remove_comment(comment_id):
         if comment["user_id"] != session["user_id"]:
             error = "VIRHE: Et voi poistaa muiden kommentteja!"
             return render_template("error_message.html", login_error=error)
-        
+
         review_id = comment[3]
 
         if "remove" in request.form:
@@ -228,9 +233,9 @@ def update_review():
     login_error = require_login()
     if login_error:
         return login_error
-    
+
     check_csrf()
-    
+
     review_id = request.form["item_id"]
     review = reviews.get_review(review_id)
 
@@ -247,7 +252,8 @@ def update_review():
     year = request.form["year"]
 
     if check_movie(movie_title, movie_rating, movie_review, genre, director, year):
-        reviews.update_review(review_id, movie_title, movie_rating, movie_review, genre, director, year)
+        reviews.update_review(review_id, movie_title, movie_rating, movie_review,
+                              genre, director, year)
     else:
         error = "VIRHE: Tarkista syöte!"
         flash(error)
@@ -261,15 +267,15 @@ def remove_review(item_id):
     login_error = require_login()
     if login_error:
         return login_error
-    
+
     if request.method == "GET":
         review = reviews.get_review(item_id)
         if review["user_id"] != session["user_id"]:
             error = "VIRHE: Et voi poistaa muiden arvosteluja!"
             return render_template("error_message.html", login_error=error)
-        
+
         return render_template("remove_review.html", item=review)
-    
+
     # Remove review handler
     if request.method == "POST":
         check_csrf()
@@ -284,7 +290,7 @@ def remove_review(item_id):
                 return redirect("/movie_reviews")
         else:
             return redirect("/movie_review/" + str(item_id))
-        
+ 
 # Search page
 @app.route("/find_review")
 def search_review():
@@ -312,17 +318,18 @@ def movie_reviews(page=1):
         return redirect("/movie_reviews/" + str(page_count))
 
     all_reviews = reviews.fetch_reviews(page, page_size)
-    return render_template("movie_reviews.html", items=all_reviews, page=page, page_count=page_count)
+    return render_template("movie_reviews.html", items=all_reviews,
+                           page=page, page_count=page_count)
 
 # Show review page
 @app.route("/movie_review/<int:item_id>")
 def page(item_id):
-    review = reviews.get_review(item_id) 
-    info = reviews.get_info(item_id) 
+    review = reviews.get_review(item_id)
+    info = reviews.get_info(item_id)
     comments = reviews.fetch_comments(item_id)
 
     if type(review) is str:
-        # rnf = Review Not Found 
+        # rnf = Review Not Found
         return render_template("error_message.html", rnf_error=review)
     else:
         return render_template("show_review.html", item=review, info=info, comments=comments)
