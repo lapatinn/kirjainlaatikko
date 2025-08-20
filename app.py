@@ -21,40 +21,33 @@ def check_csrf():
         abort(403)
     
 def check_movie(title, rating, review, genre, director, year):
-    # Kaikki olemassa
-    if title and rating and review and genre and director and year: 
-        data_exists = True
-    else:
+    # Check for non-empty title and string length
+    if title.isspace() or len(title) <= 0 or len(title) >= 75 or len(review) <= 0 or len(review) >= 1000 or len(director) <= 0 or len(director) >= 50:
         return False
     
-    # Merkkijonot oikean pituiset, otsikko ei tyhjä
-    if not title.isspace() and len(title) > 0 and len(title) <= 75 and len(review) > 0 and len(review) <= 1000 and len(director) > 0 and len(director) <= 50:
-        string_length = True
-    else:
+    # Check integers
+    if rating == "" or int(rating) <= 0 or int(rating) > 10 or year == "" or int(year) < 1878 or int(year) > 2025:
         return False
     
-    # Kokonaisluvut oikealla lukuvälillä
-    if int(rating) >= 0 and int(rating) <= 10 and int(year) >= 1878 and int(year) <= 2025:
-        int_values = True
-    else:
+    # Check that genre exists
+    if genre == "":
         return False
     
-    # Kaikki ok
-    if data_exists and string_length and int_values:
-        return True
-    else:
-        return False
+    return True
 
+# Frontpage
 @app.route("/")
 def index():
     movies = ["Terminator", "Star Wars", "Madagascar", "Autot 2", "Matin ennakkotehtävä (rare)"]
     return render_template("index.html", message="Parhaat elokuvat 2025", items=movies)
 
+# Registration page
 @app.route("/register")
 def register():
     return render_template("register.html")
 
-@app.route("/create", methods=["POST"]) # Luo tunnus
+# Registration handler
+@app.route("/create", methods=["POST"])
 def create():
     username = request.form["username"]
     password1 = request.form["password1"]
@@ -85,6 +78,7 @@ def create():
     flash(f"Tunnus {username} luotu! Voit nyt kirjautua sisään.")
     return redirect("/")
 
+# Login handler
 @app.route("/login", methods=["POST"])
 def login():
     username = request.form["username"]
@@ -97,7 +91,7 @@ def login():
         flash(error)
         return redirect("/")
 
-    # get_hash palauttaa sqlite-olion jos käyttäjä ja salasana löytyy, muuten virheviestin:
+    # get_hash returns an sql-object if no errors, otherwise the error message will be returned
     if type(res) is str: 
         flash("VIRHE: Tunnus/salasana eivät ole tietokannassa!")
         return redirect("/")
@@ -115,6 +109,7 @@ def login():
         error = "VIRHE: väärä tunnus tai salasana!"
         return render_template("error_message.html", login_error=error)
 
+# Logout handler
 @app.route("/logout")
 def logout():
     if "user_id" in session:
@@ -122,10 +117,12 @@ def logout():
         del session["username"]
         return redirect("/")
 
+# New review page
 @app.route("/new_item")
 def new_item():
     return render_template("new_item.html")
 
+# New review handler
 @app.route("/create_item", methods=["POST"])
 def create_item():
     login_error = require_login()
@@ -152,6 +149,7 @@ def create_item():
 
     return redirect("/movie_reviews")
 
+# New comment handler
 @app.route("/create_comment", methods=["POST"])
 def create_comment():
     login_error = require_login()
@@ -172,6 +170,7 @@ def create_comment():
     
     return redirect("/movie_review/" + review_id)
 
+# Remove comment handler
 @app.route("/remove_comment/<int:comment_id>", methods=["GET","POST"])
 def remove_comment(comment_id):
     login_error = require_login()
@@ -204,6 +203,7 @@ def remove_comment(comment_id):
 
     return render_template("remove_comment.html", comment=comment)
 
+# Edit review page
 @app.route("/edit_review/<int:item_id>")
 def edit_item(item_id):
     login_error = require_login()
@@ -222,6 +222,7 @@ def edit_item(item_id):
 
     return render_template("edit.html", item=review, info=info[0])
 
+# Edit review handler
 @app.route("/update_review", methods=["POST"])
 def update_review():
     login_error = require_login()
@@ -254,6 +255,7 @@ def update_review():
 
     return redirect("/movie_review/" + review_id)
 
+# Remove review page
 @app.route("/remove_review/<int:item_id>", methods=["GET","POST"])
 def remove_review(item_id):
     login_error = require_login()
@@ -268,6 +270,7 @@ def remove_review(item_id):
         
         return render_template("remove_review.html", item=review)
     
+    # Remove review handler
     if request.method == "POST":
         check_csrf()
         review = reviews.get_review(item_id)
@@ -282,6 +285,7 @@ def remove_review(item_id):
         else:
             return redirect("/movie_review/" + str(item_id))
         
+# Search page
 @app.route("/find_review")
 def search_review():
     query = request.args.get("query")
@@ -293,6 +297,7 @@ def search_review():
 
     return render_template("find_review.html", query=query, results=results)
 
+# All reviews page
 @app.route("/movie_reviews")
 @app.route("/movie_reviews/<int:page>")
 def movie_reviews(page=1):
@@ -309,6 +314,7 @@ def movie_reviews(page=1):
     all_reviews = reviews.fetch_reviews(page, page_size)
     return render_template("movie_reviews.html", items=all_reviews, page=page, page_count=page_count)
 
+# Show review page
 @app.route("/movie_review/<int:item_id>")
 def page(item_id):
     review = reviews.get_review(item_id) 
@@ -321,6 +327,7 @@ def page(item_id):
     else:
         return render_template("show_review.html", item=review, info=info, comments=comments)
 
+# Show user page
 @app.route("/show_user/<int:user_id>")
 def show_user(user_id):
     user = users.get_user(user_id)
@@ -332,6 +339,7 @@ def show_user(user_id):
         items = users.get_users_reviews(user_id)
         return render_template("show_user.html", user=user, reviews=items)
 
+# All users page
 @app.route("/all_users")
 @app.route("/all_users/<int:page>")
 def all_users(page=1):
