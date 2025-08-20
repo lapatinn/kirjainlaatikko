@@ -93,7 +93,7 @@ def login():
 
     # get_hash returns an sql-object if no errors, otherwise the error message will be returned
     if type(res) is str: 
-        flash("VIRHE: Tunnus/salasana eivät ole tietokannassa!")
+        flash(res)
         return redirect("/")
     else:
         user_id = res["id"]
