@@ -360,8 +360,8 @@ def all_users(page=1):
     if page > page_count:
         return redirect("/all_users/" + str(page_count))
 
-    guys = users.fetch_users(page, page_size)
-    return render_template("all_users.html", users=guys, page=page, page_count=page_count)
+    all_users = users.fetch_users(page, page_size)
+    return render_template("all_users.html", users=all_users, page=page, page_count=page_count)
 
 if __name__ == "__main__":
     app.run(debug=False)

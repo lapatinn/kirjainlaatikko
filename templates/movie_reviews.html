@@ -23,6 +23,12 @@
     </div>
 
     <div class="content">
+    <p>
+        <a href="/movie_reviews/{{ page - 1 }}">&lt;&lt;</a>
+        Sivu {{ page }}/{{ page_count }}
+        <a href="/movie_reviews/{{ page + 1 }}">&gt;&gt;</a>
+        <hr />
+    </p>
     {% if items %}
     <ul>
         {% for item in items %}
@@ -39,10 +45,10 @@
     </p>
     {% endif %}
     <p>
+        <hr />
         <a href="/movie_reviews/{{ page - 1 }}">&lt;&lt;</a>
         Sivu {{ page }}/{{ page_count }}
         <a href="/movie_reviews/{{ page + 1 }}">&gt;&gt;</a>
-        <hr />
     </p>
     </div>
 </body>
