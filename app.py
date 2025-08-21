@@ -41,6 +41,14 @@ def check_movie(title, rating, review, genre, director, year):
 
     return True
 
+def check_comment(comment):
+    if len(comment) > 100:
+        return False
+    if comment.isspace():
+        return False
+    
+    return True
+
 # Newline filter
 @app.template_filter()
 def show_lines(content):
@@ -179,11 +187,12 @@ def create_comment():
     user_id =  session["user_id"]
     review_id = request.form["review_id"]
 
-    if len(comment) <= 100:
+    if check_comment(comment):
         reviews.add_comment(user_id, review_id, comment)
     else:
-        error = "VIRHE: Kommenttisi on liian pitkä!"
-        return render_template("error_message.html", comment_error=error)
+        error = "VIRHE: Tarkista kommentti"
+        flash(error)
+        return redirect("/movie_review/" + review_id)
 
     return redirect("/movie_review/" + review_id)
 

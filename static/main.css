@@ -13,19 +13,27 @@ body {
   h1 {
     margin: auto;
     color: rgb(47, 104, 64);
+    overflow-wrap: break-word;
   }
 
   h2 {
     margin: auto;
     color: rgb(110, 47, 128);
+    overflow-wrap: break-word;
   }
+
+  p {
+    white-space: initial;
+    overflow-wrap: break-word;
+    }
 
   ul {
     margin: auto;
     padding-top: 1.0em;
     padding-bottom: 1.0em;
     padding-right: 1.0em;
-    padding-left: 1.0em
+    padding-left: 1.0em;
+    overflow-wrap: break-word;
   }
 
   li {

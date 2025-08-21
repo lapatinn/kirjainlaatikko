@@ -20,6 +20,13 @@
     
     <div class="content">
     {% if info %}
+
+    {% for message in get_flashed_messages() %}
+    <p>
+      <b>{{ message }}</b>
+    </p>
+    {% endfor %}
+
     <p>
         <h2>Tietoja elokuvasta: </h2>
         {% for info in info %}
@@ -44,10 +51,15 @@
     <ul>
         {% for comment in comments %}
         {% if session.user_id == comment.user_id %}
-        <li>"{{ comment.content | show_lines }}" - <a href="/show_user/{{ comment.user_id }}">{{ comment.username }}</a> | 
+        <li>"{{ comment.content | show_lines }}" <br>
+           - <a href="/show_user/{{ comment.user_id }}">{{ comment.username }}</a> | 
         <a href="/remove_comment/{{ comment.id }}">Poista </a></li>
+        <hr />
+
         {% else %}
-        <li>"{{ comment.content | show_lines }}" - <a href="/show_user/{{ comment.user_id }}">{{ comment.username }}</a></li>
+        <li>"{{ comment.content | show_lines }}" <br> 
+            - <a href="/show_user/{{ comment.user_id }}">{{ comment.username }}</a></li>
+            <hr />
         {% endif %}
         {% endfor %}
     </ul>
@@ -82,8 +94,8 @@
     </form>
     {% endif %}
 
-    <h2>Toiminnot: </h2>
     {% if item.user_id == session.user_id %}
+    <h2>Toiminnot: </h2>
     <p>
         <a href="/edit_review/{{ item.id }}">Muokkaa</a> |
         <a href="/remove_review/{{ item.id }}">Poista</a>
