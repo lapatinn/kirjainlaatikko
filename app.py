@@ -165,8 +165,10 @@ def create_item():
     director = request.form["director"]
     year = request.form["year"]
 
-    if check_movie(movie_title, movie_rating, movie_review, genre, director, year):
-        reviews.add_review(user_id, movie_title, movie_rating, movie_review, genre, director, year)
+    if check_movie(movie_title, movie_rating, movie_review, \
+                   genre, director, year):
+        reviews.add_review(user_id, movie_title, movie_rating, \
+                           movie_review, genre, director, year)
     else:
         error = "VIRHE: Tarkista syöte."
         flash(error)
@@ -382,7 +384,8 @@ def all_users(page=1):
         return redirect("/all_users/" + str(page_count))
 
     all_users = users.fetch_users(page, page_size)
-    return render_template("all_users.html", users=all_users, page=page, page_count=page_count)
+    return render_template("all_users.html", users=all_users,\
+                        page=page, page_count=page_count)
 
 if __name__ == "__main__":
     app.run(debug=False)
