@@ -61,15 +61,18 @@ def create():
     if len(username) < 3:
         error = "VIRHE: Liian lyhyt nimi (väh. 3 merkkiä)!"
         flash(error)
-        return redirect("/register")
+        return render_template("register.html",  username=username, \
+                        password1=password1, password2=password2)
+
     if password1 != password2:
         error = "VIRHE: Salasanat eivät täsmää!"
         flash(error)
-        return redirect("/register")
+        return render_template("register.html", username=username)
+
     if len(password1) < 3:
         error = "VIRHE: Liian lyhyt salasana (väh. 3 merkkiä)!"
         flash(error)
-        return redirect("/register")
+        return render_template("register.html", username=username)
 
     password_hash = generate_password_hash(password1)
 
@@ -78,7 +81,8 @@ def create():
     except sqlite3.IntegrityError:
         error = "VIRHE: Tunnus on jo varattu!"
         flash(error)
-        return redirect("/register")
+        return render_template("register.html", username=username, \
+                               password1=password1, password2=password2)
 
     flash(f"Tunnus {username} luotu! Voit nyt kirjautua sisään.")
     return redirect("/")

@@ -32,15 +32,15 @@
 
     <p>
       Tunnus: <br />
-      <input type="text" name="username" maxlength="16" required/>
+      <input type="text" name="username" maxlength="16" value="{{ username }}" required/>
     </p>
     <p>
       Salasana: <br />
-      <input type="password" name="password1" required/>
+      <input type="password" name="password1" value="{{ password1 }}"required/>
     </p>
     <p>
       Salasana uudestaan: <br />
-      <input type="password" name="password2" required/>
+      <input type="password" name="password2" value="{{ password2 }}"required/>
     </p>
     <input type="submit" value="Luo tunnus" />
   </form>
