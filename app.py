@@ -46,7 +46,7 @@ def check_comment(comment):
         return False
     if comment.isspace():
         return False
-    
+
     return True
 
 # Newline filter
