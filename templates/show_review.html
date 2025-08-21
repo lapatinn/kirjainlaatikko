@@ -30,9 +30,9 @@
     <p>
         <h2>Tietoja elokuvasta: </h2>
         {% for info in info %}
-        <p>Genre: {{ info.genre }} </p>
-        <p>Ohjaaja: {{ info.director }} </p>
-        <p>Julkaisuvuosi: {{ info.year }} </p>
+        <p>Genre: <b> {{ info.genre }} </b> </p>
+        <p>Ohjaaja: <b> {{ info.director }} </b></p>
+        <p>Julkaisuvuosi: <b> {{ info.year }} </b> </p>
         {% endfor %}
     </p>
     {% endif %}
@@ -40,7 +40,7 @@
     <h2>Käyttäjän <a href="/show_user/{{ item.user_id }}">{{ item.username }}</a> arvostelu:</h2>
 
     <p>
-        Arvosana: {{ item.rating }} / 10
+        Arvosana: <b> {{ item.rating }} / 10 </b>
     </p>
     <p>
         Arvostelu: {{ item.review | show_lines }}
