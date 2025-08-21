@@ -1,6 +1,7 @@
 import sqlite3
 import math
 import secrets
+import markupsafe
 
 from flask import Flask, render_template, request, redirect, session, flash, abort
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -39,6 +40,13 @@ def check_movie(title, rating, review, genre, director, year):
         return False
 
     return True
+
+# Newline filter
+@app.template_filter()
+def show_lines(content):
+    content = str(markupsafe.escape(content))
+    content = content.replace("\n", "<br />")
+    return markupsafe.Markup(content)
 
 # Frontpage
 @app.route("/")

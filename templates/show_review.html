@@ -36,7 +36,7 @@
         Arvosana: {{ item.rating }} / 10
     </p>
     <p>
-        Arvostelu: {{ item.review }}
+        Arvostelu: {{ item.review | show_lines }}
     </p>
 
     <h2>Kommentit:</h2>
@@ -44,10 +44,10 @@
     <ul>
         {% for comment in comments %}
         {% if session.user_id == comment.user_id %}
-        <li>"{{ comment.content }}" - <a href="/show_user/{{ comment.user_id }}">{{ comment.username }}</a> | 
+        <li>"{{ comment.content | show_lines }}" - <a href="/show_user/{{ comment.user_id }}">{{ comment.username }}</a> | 
         <a href="/remove_comment/{{ comment.id }}">Poista </a></li>
         {% else %}
-        <li>"{{ comment.content }}" - <a href="/show_user/{{ comment.user_id }}">{{ comment.username }}</a></li>
+        <li>"{{ comment.content | show_lines }}" - <a href="/show_user/{{ comment.user_id }}">{{ comment.username }}</a></li>
         {% endif %}
         {% endfor %}
     </ul>
