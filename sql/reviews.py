@@ -15,6 +15,7 @@ def add_review(user_id, movie_title, movie_rating, movie_review, genre, director
 
     db.execute(sql1, [rev_id, genre, director, year])
 
+# Fetch all reviews
 def fetch_reviews(page, page_size):
     sql = """SELECT R.id, R.user_id, R.movie, R.rating, R.review, U.username
             FROM reviews R, users U
@@ -35,6 +36,7 @@ def review_count():
     
     return db.query(sql)[0]
 
+# Get specific review
 def get_review(item_id):
     sql = """SELECT R.id, R.movie, R.rating, R.review, R.user_id, U.username
             FROM reviews R, users U
@@ -72,6 +74,7 @@ def remove_review(item_id):
 
     db.execute(sql, [item_id])
 
+# Search for reviews
 def find_reviews(query):
     sql = """SELECT id, movie FROM reviews
             WHERE movie LIKE ?
@@ -80,6 +83,7 @@ def find_reviews(query):
     
     return db.query(sql, ["%" + query + "%"])
 
+# Get genre, director, year of specific review
 def get_info(item_id):
     sql = """SELECT genre, director, year
             FROM movie_info
@@ -97,6 +101,7 @@ def add_comment(user_id, review_id, comment):
 
     db.execute(sql, [user_id, review_id, comment])
 
+# Fetch all comments for specific review
 def fetch_comments(review_id):
     sql = """SELECT C.id, C.content, C.user_id, U.username
             FROM comments C, reviews R, users U
@@ -110,6 +115,7 @@ def fetch_comments(review_id):
 
     return res
 
+# Get specific comment
 def get_comment(comment_id):
     sql = """SELECT C.content, C.id, C.user_id, C.review_id
             FROM comments C, users U

@@ -116,7 +116,8 @@ def login():
         flash(error)
         return redirect("/")
 
-    # get_hash returns an sql-object if no errors, otherwise the error message will be returned
+    # user.get_hash() returns an sql-object if no errors, 
+    # otherwise the error message will be returned:
     if type(res) is str:
         flash(res)
         return redirect("/")

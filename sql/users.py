@@ -17,7 +17,8 @@ def get_hash(username):
     error = "VIRHE: Annettua käyttäjänimeä ei ole tietokannassa."
 
     return res[0] if res else error
-    
+
+# Get specific user
 def get_user(user_id):
     sql = """SELECT id, username
             FROM users
@@ -41,6 +42,7 @@ def get_users_reviews(user_id):
 
     return res if res else None
 
+# Fetch all users
 def fetch_users(page, page_size):
     sql = """SELECT username, id
             FROM users
