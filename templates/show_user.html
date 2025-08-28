@@ -20,17 +20,13 @@
     
     <div class="content">
     <p>
-        On valtuutettu elokuva-asiaintuntija ja on täten ansainnut oikeuden luoda elokuva-arvosteluja 
+        {{ user.username }} On valtuutettu elokuva-asiaintuntija ja on täten ansainnut oikeuden luoda elokuva-arvosteluja 
         maineikkaalle alustallemme.
     </p>
     {% if reviews %}
     <p>
-        <b>Tässä ovat käyttäjän {{ user.username }} luomat arvostelut:</b>
+        <b>{{ user.username }} on luonut {{ reviews | count}} arvostelua:</b>
     </p>
-    <p>
-        Niitä on {{ reviews | count}}.
-    </p>
-
     
     <ul>
         {% for rev in reviews %}
